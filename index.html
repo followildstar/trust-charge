@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
   <title>Trust Charge</title>
 </head>
@@ -14,7 +16,7 @@
         <div class="brand">
           <div class="brand-title">Trust Charge</div>
         </div>
-        <div class="date-chip" id="todayChip">5월 27일</div>
+        <div class="date-chip" id="todayChip">May 27</div>
       </header>
 
       <section class="hero">
@@ -42,14 +44,14 @@
             <div class="percent-number"><span id="percentText">20</span><span>%</span></div>
           </div>
         </div>
-        <p class="hero-copy">Every time I keep a small promise, my sense of trust in me recovers little by little.</p>
+        <p class="hero-copy">매일 충전함으로써 신뢰가 올라갑니다. <br>80%이상이 되었을때 비로소 선택을 할 수 있고 <br>그를 신뢰할 수 있습니다.</p>
       </section>
 
       <section class="today-card">
         <div class="section-head">
           <div class="section-title-wrap">
-            <h2 class="section-title">Today charge</h2>
-            <div class="section-sub" id="todaySub"> 5 list </div>
+            <h2 class="section-title">오늘의 충전</h2>
+            <div class="section-sub" id="todaySub"> 5 항목들 </div>
           </div>
           <div class="section-sub" id="todayCount">0 / 5</div>
         </div>
@@ -61,20 +63,20 @@
       <header class="calendar-header">
         <div class="calendar-title">
           <h1>Calendar</h1>
-          <p>Period : 2026.05.27 — 2026.08.18</p>
+          <p id="periodRange">Period : 2026.05.27 — 2026.08.18</p>
         </div>
        
       </header>
 
-      <nav class="month-tabs" id="monthTabs" aria-label="월 선택"></nav>
+      <nav class="month-tabs" id="monthTabs" aria-label="Select month"></nav>
       <div id="calendarWrap"></div>
       <section class="detail-panel">
         <div class="detail-date">
-          <strong id="selectedDateTitle">날짜 선택</strong>
-          <span id="selectedDateMeta">체크 수정 가능</span>
+          <strong id="selectedDateTitle">Select date</strong>
+          <span id="selectedDateMeta">Editable</span>
         </div>
         <div id="selectedTaskList" class="task-list">
-          <div class="empty-note">활성화된 날짜를 선택하면 해당 날짜의 체크리스트를 수정할 수 있습니다.</div>
+          <div class="empty-note">Select an active date to edit its checklist.</div>
         </div>
       </section>
        <button class="back-btn" id="closeCalendar" aria-label="홈으로 돌아가기">확인</button>
@@ -95,15 +97,18 @@
     const BASE_PERCENT = 20;
     const CIRCLE_LENGTH = 666;
 
+    const EN_MONTH_NAMES = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+    const EN_WEEKDAY_NAMES = ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];
+
     const months = [
-      { year: 2026, month: 4, name: '5월', fullName: '2026년 5월' },
-      { year: 2026, month: 5, name: '6월', fullName: '2026년 6월' },
-      { year: 2026, month: 6, name: '7월', fullName: '2026년 7월' },
-      { year: 2026, month: 7, name: '8월', fullName: '2026년 8월' }
+      { year: 2026, month: 4, name: 'May', fullName: 'May 2026' },
+      { year: 2026, month: 5, name: 'June', fullName: 'June 2026' },
+      { year: 2026, month: 6, name: 'July', fullName: 'July 2026' },
+      { year: 2026, month: 7, name: 'August', fullName: 'August 2026' }
     ];
 
     const taskTemplates = {
-      weekday: ['아침 러닝', '출퇴근 영어', '요가수업', '피아노연습', '사진드로잉'],
+       weekday: ['아침 러닝', '출퇴근 영어', '요가수업', '피아노연습', '사진드로잉'],
       saturday: ['아침 러닝', '요가수업', '피아노연습', '사진드로잉'],
       sunday: ['아침 러닝', '피아노연습', '사진드로잉']
     };
@@ -168,9 +173,23 @@
       return `${y}-${m}-${d}`;
     }
 
-    function formatKoreanDate(key) {
+    function formatEnglishDate(key) {
       const date = toDate(key);
-      return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+      const monthName = EN_MONTH_NAMES[date.getMonth()];
+      return `${monthName} ${date.getDate()}`;
+    }
+
+    function formatEnglishDateWithWeekday(key) {
+      const date = toDate(key);
+      const weekday = EN_WEEKDAY_NAMES[date.getDay()];
+      const monthName = EN_MONTH_NAMES[date.getMonth()];
+      return `${weekday}, ${monthName} ${date.getDate()}`;
+    }
+
+    function formatEnglishFullDate(key) {
+      const date = toDate(key);
+      const monthName = EN_MONTH_NAMES[date.getMonth()];
+      return `${monthName} ${date.getDate()}, ${date.getFullYear()}`;
     }
 
     function isWithinRange(key) {
@@ -273,8 +292,8 @@
       const record = ensureRecord(todayKey);
       const done = record.filter(Boolean).length;
 
-      todayChip.textContent = formatKoreanDate(todayKey);
-      todaySub.textContent = `${tasks.length} lists`;
+      todayChip.textContent = formatEnglishDateWithWeekday(todayKey);
+      todaySub.textContent = `${tasks.length} 항목들`;
       todayCount.textContent = `${done} / ${tasks.length}`;
       todayTaskList.innerHTML = '';
 
@@ -335,9 +354,8 @@
       const card = document.createElement('section');
       card.className = 'month-card';
       card.innerHTML = `
-        <div class="month-name">${monthItem.fullName}</div>
         <div class="weekdays">
-          <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
         </div>
         <div class="days"></div>
       `;
@@ -363,6 +381,11 @@
         const doneCount = record ? record.filter(Boolean).length : 0;
 
         dayButton.className = 'day';
+        // add weekend-specific classes
+        const wk = date.getDay();
+        if (wk === 0) dayButton.classList.add('is-sunday');
+        if (wk === 6) dayButton.classList.add('is-saturday');
+
         if (active) dayButton.classList.add('is-active-range');
         if (key === getTodayKey()) dayButton.classList.add('is-today');
         if (key === state.selectedDate) dayButton.classList.add('is-selected');
@@ -389,7 +412,7 @@
       const tasks = getTasksForDate(key);
       const record = ensureRecord(key);
       const done = record.filter(Boolean).length;
-      selectedDateTitle.textContent = formatKoreanDate(key);
+      selectedDateTitle.textContent = formatEnglishDateWithWeekday(key);
       selectedDateMeta.textContent = `${done} / ${tasks.length}`;
       selectedTaskList.innerHTML = '';
 
@@ -416,6 +439,11 @@
     }
 
     renderHome();
+    // set period range text in English
+    const periodEl = document.getElementById('periodRange');
+    if (periodEl) {
+      periodEl.textContent = `Period: ${formatEnglishFullDate(START_DATE)} — ${formatEnglishFullDate(END_DATE)}`;
+    }
   </script>
 </body>
 </html>
