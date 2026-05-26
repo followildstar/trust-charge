@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Trust Charge</title>
+</head>
+<body>
+  <main class="app">
+    <section id="homeScreen" class="screen is-active">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-title">Trust Charge</div>
+        </div>
+        <div class="date-chip" id="todayChip">5월 27일</div>
+      </header>
+
+      <section class="hero">
+        <!-- <div class="hero-label">나에 대한 현재 신뢰도</div> -->
+        <div class="percent-wrap">
+          <svg class="progress-svg" viewBox="0 0 260 260" aria-hidden="true">
+            <defs>
+              <linearGradient id="movingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f2aac8">
+                  <animate attributeName="stop-color" values="#f2aac8;#a8d8ef;#c9b7ff;#f2d29b;#f2aac8" dur="6s" repeatCount="indefinite" />
+                </stop>
+                <stop offset="45%" stop-color="#a8d8ef">
+                  <animate attributeName="stop-color" values="#a8d8ef;#c9b7ff;#f2d29b;#f2aac8;#a8d8ef" dur="6s" repeatCount="indefinite" />
+                </stop>
+                <stop offset="100%" stop-color="#c9b7ff">
+                  <animate attributeName="stop-color" values="#c9b7ff;#f2d29b;#f2aac8;#a8d8ef;#c9b7ff" dur="6s" repeatCount="indefinite" />
+                </stop>
+              </linearGradient>
+            </defs>
+            <circle class="progress-bg" cx="130" cy="130" r="106" />
+            <circle class="progress-glow" id="progressGlow" cx="130" cy="130" r="106" />
+            <circle class="progress-main" id="progressMain" cx="130" cy="130" r="106" />
+          </svg>
+          <div class="percent-center">
+            <div class="percent-number"><span id="percentText">20</span><span>%</span></div>
+          </div>
+        </div>
+        <p class="hero-copy">Every time I keep a small promise, my sense of trust in me recovers little by little.</p>
+      </section>
+
+      <section class="today-card">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <h2 class="section-title">Today charge</h2>
+            <div class="section-sub" id="todaySub"> 5 list </div>
+          </div>
+          <div class="section-sub" id="todayCount">0 / 5</div>
+        </div>
+        <div class="task-list" id="todayTaskList"></div>
+      </section>
+    </section>
+
+    <section id="calendarScreen" class="screen">
+      <header class="calendar-header">
+        <div class="calendar-title">
+          <h1>Calendar</h1>
+          <p>Period : 2026.05.27 — 2026.08.18</p>
+        </div>
+       
+      </header>
+
+      <nav class="month-tabs" id="monthTabs" aria-label="월 선택"></nav>
+      <div id="calendarWrap"></div>
+      <section class="detail-panel">
+        <div class="detail-date">
+          <strong id="selectedDateTitle">날짜 선택</strong>
+          <span id="selectedDateMeta">체크 수정 가능</span>
+        </div>
+        <div id="selectedTaskList" class="task-list">
+          <div class="empty-note">활성화된 날짜를 선택하면 해당 날짜의 체크리스트를 수정할 수 있습니다.</div>
+        </div>
+      </section>
+       <button class="back-btn" id="closeCalendar" aria-label="홈으로 돌아가기">확인</button>
+    </section>
+    
+
+    <button class="fab" id="openCalendar">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="4" y="5" width="16" height="15" rx="3" stroke="currentColor" stroke-width="1.7" />
+        <path d="M8 3.5V7M16 3.5V7M4.5 10H19.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+      </svg>
+    </button>
+  </main>
+
+  <script>
+    const START_DATE = '2026-05-27';
+    const END_DATE = '2026-08-18';
+    const BASE_PERCENT = 20;
+    const CIRCLE_LENGTH = 666;
+
+    const months = [
+      { year: 2026, month: 4, name: '5월', fullName: '2026년 5월' },
+      { year: 2026, month: 5, name: '6월', fullName: '2026년 6월' },
+      { year: 2026, month: 6, name: '7월', fullName: '2026년 7월' },
+      { year: 2026, month: 7, name: '8월', fullName: '2026년 8월' }
+    ];
+
+    const taskTemplates = {
+      weekday: ['아침 러닝', '출퇴근 영어', '요가수업', '피아노연습', '사진드로잉'],
+      saturday: ['아침 러닝', '요가수업', '피아노연습', '사진드로잉'],
+      sunday: ['아침 러닝', '피아노연습', '사진드로잉']
+    };
+
+    const state = {
+      selectedMonthIndex: getInitialMonthIndex(),
+      selectedDate: getTodayKey(),
+      records: loadRecords()
+    };
+
+    const homeScreen = document.getElementById('homeScreen');
+    const calendarScreen = document.getElementById('calendarScreen');
+    const progressMain = document.getElementById('progressMain');
+    const progressGlow = document.getElementById('progressGlow');
+    const percentText = document.getElementById('percentText');
+    const todayChip = document.getElementById('todayChip');
+    const todaySub = document.getElementById('todaySub');
+    const todayCount = document.getElementById('todayCount');
+    const todayTaskList = document.getElementById('todayTaskList');
+    const monthTabs = document.getElementById('monthTabs');
+    const calendarWrap = document.getElementById('calendarWrap');
+    const selectedDateTitle = document.getElementById('selectedDateTitle');
+    const selectedDateMeta = document.getElementById('selectedDateMeta');
+    const selectedTaskList = document.getElementById('selectedTaskList');
+
+    document.getElementById('openCalendar').addEventListener('click', () => {
+      homeScreen.classList.remove('is-active');
+      calendarScreen.classList.add('is-active');
+      document.querySelector('.fab').style.display = 'none';
+      renderMonthTabs();
+      renderCalendar();
+      renderSelectedDate();
+    });
+
+    document.getElementById('closeCalendar').addEventListener('click', () => {
+      calendarScreen.classList.remove('is-active');
+      homeScreen.classList.add('is-active');
+      document.querySelector('.fab').style.display = 'flex';
+      renderHome();
+    });
+
+    function loadRecords() {
+      try {
+        return JSON.parse(localStorage.getItem('trustChargeRecords')) || {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function saveRecords() {
+      localStorage.setItem('trustChargeRecords', JSON.stringify(state.records));
+    }
+
+    function toDate(dateString) {
+      return new Date(dateString + 'T00:00:00');
+    }
+
+    function toKey(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function formatKoreanDate(key) {
+      const date = toDate(key);
+      return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+    }
+
+    function isWithinRange(key) {
+      return key >= START_DATE && key <= END_DATE;
+    }
+
+    function getTodayKey() {
+      const realToday = toKey(new Date());
+      if (isWithinRange(realToday)) return realToday;
+      return START_DATE;
+    }
+
+    function getInitialMonthIndex() {
+      const today = toDate(getTodayKey());
+      const foundIndex = months.findIndex(item => item.year === today.getFullYear() && item.month === today.getMonth());
+      return foundIndex >= 0 ? foundIndex : 0;
+    }
+
+    function isPastMonth(monthItem) {
+      const today = toDate(getTodayKey());
+      const monthEnd = new Date(monthItem.year, monthItem.month + 1, 0);
+      return monthEnd < today;
+    }
+
+    function getDayType(key) {
+      const day = toDate(key).getDay();
+      if (day === 6) return 'saturday';
+      if (day === 0) return 'sunday';
+      return 'weekday';
+    }
+
+    function getTasksForDate(key) {
+      return taskTemplates[getDayType(key)];
+    }
+
+    function ensureRecord(key) {
+      const tasks = getTasksForDate(key);
+      if (!state.records[key]) {
+        state.records[key] = tasks.map(() => false);
+      }
+      if (state.records[key].length !== tasks.length) {
+        state.records[key] = tasks.map((_, index) => Boolean(state.records[key][index]));
+      }
+      return state.records[key];
+    }
+
+    function getTotalTaskCount() {
+      let total = 0;
+      const cursor = toDate(START_DATE);
+      const end = toDate(END_DATE);
+      while (cursor <= end) {
+        total += getTasksForDate(toKey(cursor)).length;
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return total;
+    }
+
+    function getDoneTaskCount() {
+      let done = 0;
+      Object.keys(state.records).forEach(key => {
+        if (!isWithinRange(key)) return;
+        done += state.records[key].filter(Boolean).length;
+      });
+      return done;
+    }
+
+    function calculatePercent() {
+      const total = getTotalTaskCount();
+      const done = getDoneTaskCount();
+      const progressPercent = (done / total) * (100 - BASE_PERCENT);
+      return Math.min(100, Math.round((BASE_PERCENT + progressPercent) * 10) / 10);
+    }
+
+    function animatePercent(nextPercent) {
+      const current = Number(percentText.dataset.value || BASE_PERCENT);
+      const startTime = performance.now();
+      const duration = 560;
+
+      function frame(now) {
+        const progress = Math.min(1, (now - startTime) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = current + (nextPercent - current) * eased;
+        const display = Number.isInteger(value) ? value.toFixed(0) : value.toFixed(1);
+        const dashOffset = CIRCLE_LENGTH - (CIRCLE_LENGTH * value / 100);
+
+        percentText.textContent = display.replace('.0', '');
+        progressMain.style.strokeDashoffset = dashOffset;
+        progressGlow.style.strokeDashoffset = dashOffset;
+
+        if (progress < 1) requestAnimationFrame(frame);
+        else percentText.dataset.value = nextPercent;
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    function renderHome() {
+      const todayKey = getTodayKey();
+      const tasks = getTasksForDate(todayKey);
+      const record = ensureRecord(todayKey);
+      const done = record.filter(Boolean).length;
+
+      todayChip.textContent = formatKoreanDate(todayKey);
+      todaySub.textContent = `${tasks.length} lists`;
+      todayCount.textContent = `${done} / ${tasks.length}`;
+      todayTaskList.innerHTML = '';
+
+      tasks.forEach((task, index) => {
+        const button = document.createElement('button');
+        button.className = `task ${record[index] ? 'is-checked' : ''}`;
+        button.innerHTML = `<span class="check"></span><span class="task-text">${task}</span>`;
+        button.addEventListener('click', () => {
+          record[index] = !record[index];
+          state.records[todayKey] = record;
+          saveRecords();
+          renderHome();
+          animatePercent(calculatePercent());
+        });
+        todayTaskList.appendChild(button);
+      });
+
+      animatePercent(calculatePercent());
+    }
+
+    function renderMonthTabs() {
+      monthTabs.innerHTML = '';
+
+      months.forEach((monthItem, index) => {
+        const button = document.createElement('button');
+        button.className = 'month-tab';
+        if (index === state.selectedMonthIndex) button.classList.add('is-active');
+        if (isPastMonth(monthItem)) button.classList.add('is-past');
+        button.textContent = monthItem.name;
+        button.addEventListener('click', () => {
+          state.selectedMonthIndex = index;
+          const firstActiveDate = getFirstActiveDateInMonth(monthItem);
+          if (firstActiveDate) state.selectedDate = firstActiveDate;
+          renderMonthTabs();
+          renderCalendar();
+          renderSelectedDate();
+        });
+        monthTabs.appendChild(button);
+      });
+    }
+
+    function getFirstActiveDateInMonth(monthItem) {
+      const first = new Date(monthItem.year, monthItem.month, 1);
+      const last = new Date(monthItem.year, monthItem.month + 1, 0);
+      const cursor = new Date(first);
+      while (cursor <= last) {
+        const key = toKey(cursor);
+        if (isWithinRange(key)) return key;
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return null;
+    }
+
+    function renderCalendar() {
+      calendarWrap.innerHTML = '';
+      const monthItem = months[state.selectedMonthIndex];
+
+      const card = document.createElement('section');
+      card.className = 'month-card';
+      card.innerHTML = `
+        <div class="month-name">${monthItem.fullName}</div>
+        <div class="weekdays">
+          <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+        </div>
+        <div class="days"></div>
+      `;
+
+      const daysWrap = card.querySelector('.days');
+      const first = new Date(monthItem.year, monthItem.month, 1);
+      const last = new Date(monthItem.year, monthItem.month + 1, 0);
+      const firstDay = first.getDay();
+
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'day';
+        daysWrap.appendChild(empty);
+      }
+
+      for (let d = 1; d <= last.getDate(); d++) {
+        const date = new Date(monthItem.year, monthItem.month, d);
+        const key = toKey(date);
+        const dayButton = document.createElement('button');
+        const active = isWithinRange(key);
+        const record = state.records[key];
+        const taskCount = getTasksForDate(key).length;
+        const doneCount = record ? record.filter(Boolean).length : 0;
+
+        dayButton.className = 'day';
+        if (active) dayButton.classList.add('is-active-range');
+        if (key === getTodayKey()) dayButton.classList.add('is-today');
+        if (key === state.selectedDate) dayButton.classList.add('is-selected');
+        if (active && doneCount > 0 && doneCount < taskCount) dayButton.classList.add('has-partial');
+        if (active && doneCount === taskCount) dayButton.classList.add('has-complete');
+
+        dayButton.textContent = d;
+        dayButton.disabled = !active;
+        dayButton.addEventListener('click', () => {
+          state.selectedDate = key;
+          renderCalendar();
+          renderSelectedDate();
+        });
+        daysWrap.appendChild(dayButton);
+      }
+
+      calendarWrap.appendChild(card);
+    }
+
+    function renderSelectedDate() {
+      const key = state.selectedDate;
+      if (!isWithinRange(key)) return;
+
+      const tasks = getTasksForDate(key);
+      const record = ensureRecord(key);
+      const done = record.filter(Boolean).length;
+      selectedDateTitle.textContent = formatKoreanDate(key);
+      selectedDateMeta.textContent = `${done} / ${tasks.length}`;
+      selectedTaskList.innerHTML = '';
+
+      tasks.forEach((task, index) => {
+        const row = document.createElement('div');
+        row.className = 'mini-task';
+        const inputId = `task-${key}-${index}`;
+        row.innerHTML = `
+          <input id="${inputId}" type="checkbox" ${record[index] ? 'checked' : ''} />
+          <label for="${inputId}">${task}</label>
+        `;
+        const input = row.querySelector('input');
+        input.addEventListener('change', () => {
+          record[index] = input.checked;
+          state.records[key] = record;
+          saveRecords();
+          renderSelectedDate();
+          renderCalendar();
+          renderMonthTabs();
+          animatePercent(calculatePercent());
+        });
+        selectedTaskList.appendChild(row);
+      });
+    }
+
+    renderHome();
+  </script>
+</body>
+</html>
