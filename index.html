@@ -108,6 +108,7 @@
 
     const taskTemplates = {
       weekday: ['러닝 10분', '영어스크립트', '요가', '피아노연습', '드로잉 20분'],
+      friday: ['러닝 10분', '영어스크립트', '피아노연습', '드로잉 20분'],
       saturday: ['러닝 10분', '영어퀴즈', '요가', '피아노연습', '드로잉 20분'],
       sunday: ['러닝 10분','영어퀴즈','피아노연습', '드로잉 20분']
     };
@@ -216,6 +217,7 @@
     function getDayType(key) {
       const day = toDate(key).getDay();
       if (day === 6) return 'saturday';
+      if (day === 5) return 'friday';
       if (day === 0) return 'sunday';
       return 'weekday';
     }
