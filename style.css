@@ -314,9 +314,7 @@ button {
     background 0.18s ease;
 }
 
-.task:active {
-  transform: scale(0.985);
-}
+
 
 .check {
   flex: 0 0 auto;
@@ -569,11 +567,12 @@ button {
 }
 
 .mini-task {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 0;
-  border-top: 1px solid rgba(23, 23, 23, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 0;
+    border-top: 1px solid rgba(23, 23, 23, 0.06);
+    word-break: keep-all;
 }
 
 .mini-task:first-child {
@@ -613,4 +612,28 @@ button {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.55;
+}
+
+.task-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+}
+
+.task-text {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #222;
+}
+
+.task-select {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: #777;
+    font-size: 14px;
+    outline: none;
 }
