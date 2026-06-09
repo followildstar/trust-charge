@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
   <title>Trust Charge</title>
 </head>
+
 <body>
   <main class="app">
     <section id="homeScreen" class="screen is-active">
@@ -20,19 +23,21 @@
       </header>
 
       <section class="hero">
-        <!-- <div class="hero-label">나에 대한 현재 신뢰도</div> -->
         <div class="percent-wrap">
           <svg class="progress-svg" viewBox="0 0 260 260" aria-hidden="true">
             <defs>
               <linearGradient id="movingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#f2aac8">
-                  <animate attributeName="stop-color" values="#f2aac8;#a8d8ef;#c9b7ff;#f2d29b;#f2aac8" dur="6s" repeatCount="indefinite" />
+                  <animate attributeName="stop-color" values="#f2aac8;#a8d8ef;#c9b7ff;#f2d29b;#f2aac8" dur="6s"
+                    repeatCount="indefinite" />
                 </stop>
                 <stop offset="45%" stop-color="#a8d8ef">
-                  <animate attributeName="stop-color" values="#a8d8ef;#c9b7ff;#f2d29b;#f2aac8;#a8d8ef" dur="6s" repeatCount="indefinite" />
+                  <animate attributeName="stop-color" values="#a8d8ef;#c9b7ff;#f2d29b;#f2aac8;#a8d8ef" dur="6s"
+                    repeatCount="indefinite" />
                 </stop>
                 <stop offset="100%" stop-color="#c9b7ff">
-                  <animate attributeName="stop-color" values="#c9b7ff;#f2d29b;#f2aac8;#a8d8ef;#c9b7ff" dur="6s" repeatCount="indefinite" />
+                  <animate attributeName="stop-color" values="#c9b7ff;#f2d29b;#f2aac8;#a8d8ef;#c9b7ff" dur="6s"
+                    repeatCount="indefinite" />
                 </stop>
               </linearGradient>
             </defs>
@@ -44,14 +49,14 @@
             <div class="percent-number"><span id="percentText">20</span><span>%</span></div>
           </div>
         </div>
-        <p class="hero-copy">말을 아낀다. 퍼센트가 높을 수록, 말을 늘려가기<br>가벼운 말로 나를 소모하지 말자.<br>오늘 할일들을 해낼때마다<br>스스로에 대한 신뢰가 조금씩 누적.</p>
+        <!-- <p class="hero-copy">말을 아낀다. 퍼센트가 높을 수록, 말을 늘려가기<br>가벼운 말로 나를 소모하지 말자.<br>오늘 할일들을 해낼때마다<br>스스로에 대한 신뢰가 조금씩 누적.</p> -->
       </section>
 
       <section class="today-card">
         <div class="section-head">
           <div class="section-title-wrap">
             <h2 class="section-title">오늘의 충전</h2>
-            <div class="section-sub" id="todaySub"> 5 항목들 </div>
+            <div class="section-sub" id="todaySub">5 항목들</div>
           </div>
           <div class="section-sub" id="todayCount">0 / 5</div>
         </div>
@@ -65,7 +70,6 @@
           <h1>Calendar</h1>
           <p id="periodRange">Period : 2026.05.27 — 2026.08.18</p>
         </div>
-       
       </header>
 
       <nav class="month-tabs" id="monthTabs" aria-label="Select month"></nav>
@@ -79,9 +83,8 @@
           <div class="empty-note">Select an active date to edit its checklist.</div>
         </div>
       </section>
-       <button class="back-btn" id="closeCalendar" aria-label="홈으로 돌아가기">확인</button>
+      <button class="back-btn" id="closeCalendar" aria-label="홈으로 돌아가기">확인</button>
     </section>
-    
 
     <button class="fab" id="openCalendar">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -97,8 +100,11 @@
     const BASE_PERCENT = 30;
     const CIRCLE_LENGTH = 666;
 
-    const EN_MONTH_NAMES = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
-    const EN_WEEKDAY_NAMES = ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];
+    // 보너스 1개 체크 시 추가되는 퍼센트
+    const BONUS_POINT = 0.3;
+
+    const EN_MONTH_NAMES = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+    const EN_WEEKDAY_NAMES = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
 
     const months = [
       { year: 2026, month: 5, name: 'June', fullName: 'June 2026' },
@@ -107,10 +113,266 @@
     ];
 
     const taskTemplates = {
-      weekday: ['러닝 10분', '영어', '요가', '피아노연습', '드로잉 20분'],
-      friday: ['러닝 10분', '영어', '피아노연습', '드로잉 20분'],
-      saturday: ['러닝 10분', '영어', '피아노연습', '드로잉 20분'],
-      sunday: ['러닝 10분','영어','피아노연습', '드로잉 20분']
+      weekday: [
+
+        {
+          label: '러닝',
+          options: [
+            '러닝 10분',
+            '걷기 20분',
+            '스트레칭 10분',
+            '회복 / 찜질'
+          ]
+        },
+
+        {
+          label: '영어',
+          options: [
+            '출퇴근 듣기',
+            '쉐도잉',
+            '오픽 스크립트',
+            '영어회화 수업'
+          ]
+        },
+        {
+          label: '요가',
+          options: [
+            '요가 수업',
+            '홈 요가30분',
+            '홈 스트레칭 30분'
+          ]
+        },
+
+        {
+          label: '피아노',
+          options: [
+            '하농 10분',
+            '연주곡 리스트',
+            '레슨곡 30분',
+            '연습실 1시간'
+          ]
+        },
+
+        {
+          label: '드로잉',
+          options: [
+            '20분 스케치',
+            '사진 소묘',
+            '아이디어 드로잉',
+            '글쓰기+드로잉',
+            '그림서치-10개'
+          ]
+        }
+      ],
+      friday: [
+
+        {
+          label: '러닝',
+          options: [
+            '러닝 10분',
+            '걷기 20분',
+            '스트레칭 10분',
+            '회복 / 찜질'
+          ]
+        },
+
+        {
+          label: '영어',
+          options: [
+            '출퇴근 듣기',
+            '쉐도잉',
+            '오픽 스크립트',
+            '영어회화 수업'
+          ]
+        },
+        {
+          label: '요가',
+          options: [
+            '요가 수업',
+            '홈 요가30분',
+            '홈 스트레칭 30분'
+          ]
+        },
+
+        {
+          label: '피아노',
+          options: [
+            '하농 10분',
+            '연주곡 리스트',
+            '레슨곡 30분',
+            '연습실 1시간'
+          ]
+        },
+
+        {
+          label: '드로잉',
+          options: [
+            '20분 스케치',
+            '사진 소묘',
+            '아이디어 드로잉',
+            '글쓰기+드로잉',
+            '그림서치-10개'
+          ]
+        }
+      ],
+      saturday: [
+
+        {
+          label: '러닝',
+          options: [
+            '러닝 10분',
+            '걷기 20분',
+            '스트레칭 10분',
+            '회복 / 찜질'
+          ]
+        },
+
+        {
+          label: '영어',
+          options: [
+            '출퇴근 듣기',
+            '쉐도잉',
+            '오픽 스크립트',
+            '영어회화 수업'
+          ]
+        },
+        {
+          label: '요가',
+          options: [
+            '요가 수업',
+            '홈 요가30분',
+            '홈 스트레칭 30분'
+          ]
+        },
+
+        {
+          label: '피아노',
+          options: [
+            '하농 10분',
+            '연주곡 리스트',
+            '레슨곡 30분',
+            '연습실 1시간'
+          ]
+        },
+
+        {
+          label: '드로잉',
+          options: [
+            '20분 스케치',
+            '사진 소묘',
+            '아이디어 드로잉',
+            '글쓰기+드로잉',
+            '그림서치-10개'
+          ]
+        }
+      ],
+      sunday: [
+
+        {
+          label: '러닝',
+          options: [
+            '러닝 10분',
+            '걷기 20분',
+            '스트레칭 10분',
+            '회복 / 찜질'
+          ]
+        },
+
+        {
+          label: '영어',
+          options: [
+            '출퇴근 듣기',
+            '쉐도잉',
+            '오픽 스크립트',
+            '영어회화 수업'
+          ]
+        },
+        {
+          label: '요가',
+          options: [
+            '요가 수업',
+            '홈 요가30분',
+            '홈 스트레칭 30분'
+          ]
+        },
+
+        {
+          label: '피아노',
+          options: [
+            '하농 10분',
+            '연주곡 리스트',
+            '레슨곡 30분',
+            '연습실 1시간'
+          ]
+        },
+
+        {
+          label: '드로잉',
+          options: [
+            '20분 스케치',
+            '사진 소묘',
+            '아이디어 드로잉',
+            '글쓰기+드로잉',
+            '그림서치-10개'
+          ]
+        }
+      ],
+    };
+
+    // 보너스 항목: 전체 목표 개수에는 포함되지 않고, 체크 시 추가 점수만 올라감
+    const bonusTemplates = {
+      weekday: [
+
+        {
+          label: 'Bonus 추가작업',
+          options: [
+            '피아노 1t',
+            '드로잉 1t',
+            '요가 1t',
+            '요가 1t',
+            '러닝 1t'
+          ]
+        }
+      ],
+      friday: [
+
+        {
+          label: 'Bonus 추가작업',
+          options: [
+            '피아노 1t',
+            '드로잉 1t',
+            '요가 1t',
+            '요가 1t',
+            '러닝 1t'
+          ]
+        }
+      ],
+      saturday: [
+
+        {
+          label: 'Bonus 추가작업',
+          options: [
+            '피아노 1t',
+            '드로잉 1t',
+            '요가 1t',
+            '요가 1t',
+            '러닝 1t'
+          ]
+        }
+      ],
+      sunday: [
+
+        {
+          label: 'Bonus 추가작업',
+          options: [
+            '피아노 1t',
+            '드로잉 1t',
+            '요가 1t',
+            '요가 1t',
+            '러닝 1t'
+          ]
+        }
+      ],
     };
 
     const state = {
@@ -150,6 +412,33 @@
       renderHome();
     });
 
+    function getMetaKey(key) {
+      return `${key}_meta`;
+    }
+
+    function getBonusMetaKey(key) {
+      return `${key}_bonus_meta`;
+    }
+
+    function ensureMetaRecord(key) {
+      const metaKey = getMetaKey(key);
+
+      if (!state.records[metaKey]) {
+        state.records[metaKey] = {};
+      }
+
+      return state.records[metaKey];
+    }
+
+    function ensureBonusMetaRecord(key) {
+      const metaKey = getBonusMetaKey(key);
+
+      if (!state.records[metaKey]) {
+        state.records[metaKey] = {};
+      }
+
+      return state.records[metaKey];
+    }
     function loadRecords() {
       try {
         return JSON.parse(localStorage.getItem('trustChargeRecords')) || {};
@@ -226,6 +515,10 @@
       return taskTemplates[getDayType(key)];
     }
 
+    function getBonusForDate(key) {
+      return bonusTemplates[getDayType(key)] || [];
+    }
+
     function ensureRecord(key) {
       const tasks = getTasksForDate(key);
       if (!state.records[key]) {
@@ -235,6 +528,21 @@
         state.records[key] = tasks.map((_, index) => Boolean(state.records[key][index]));
       }
       return state.records[key];
+    }
+
+    function ensureBonusRecord(key) {
+      const bonusTasks = getBonusForDate(key);
+      const bonusKey = `${key}_bonus`;
+
+      if (!state.records[bonusKey]) {
+        state.records[bonusKey] = bonusTasks.map(() => false);
+      }
+
+      if (state.records[bonusKey].length !== bonusTasks.length) {
+        state.records[bonusKey] = bonusTasks.map((_, index) => Boolean(state.records[bonusKey][index]));
+      }
+
+      return state.records[bonusKey];
     }
 
     function getTotalTaskCount() {
@@ -250,18 +558,39 @@
 
     function getDoneTaskCount() {
       let done = 0;
+
       Object.keys(state.records).forEach(key => {
         if (!isWithinRange(key)) return;
+        if (key.includes('_')) return;
+        if (!Array.isArray(state.records[key])) return;
+
         done += state.records[key].filter(Boolean).length;
       });
+
       return done;
     }
 
+    function getDoneBonusCount() {
+      let done = 0;
+
+      Object.keys(state.records).forEach(key => {
+        if (!key.endsWith('_bonus')) return;
+        if (!Array.isArray(state.records[key])) return;
+
+        done += state.records[key].filter(Boolean).length;
+      });
+
+      return done;
+    }
     function calculatePercent() {
       const total = getTotalTaskCount();
       const done = getDoneTaskCount();
+      const bonusDone = getDoneBonusCount();
+
       const progressPercent = (done / total) * (100 - BASE_PERCENT);
-      return Math.min(100, Math.round((BASE_PERCENT + progressPercent) * 10) / 10);
+      const bonusPercent = bonusDone * BONUS_POINT;
+
+      return Math.min(100, Math.round((BASE_PERCENT + progressPercent + bonusPercent) * 10) / 10);
     }
 
     function animatePercent(nextPercent) {
@@ -293,15 +622,35 @@
       const record = ensureRecord(todayKey);
       const done = record.filter(Boolean).length;
 
+      const bonusTasks = getBonusForDate(todayKey);
+      const bonusRecord = ensureBonusRecord(todayKey);
+      const bonusDone = bonusRecord.filter(Boolean).length;
+
       todayChip.textContent = formatEnglishDateWithWeekday(todayKey);
-      todaySub.textContent = `${tasks.length} 항목들`;
+      todaySub.textContent = `${tasks.length} 기본 항목 · 보너스 ${bonusTasks.length}`;
       todayCount.textContent = `${done} / ${tasks.length}`;
       todayTaskList.innerHTML = '';
 
       tasks.forEach((task, index) => {
         const button = document.createElement('button');
         button.className = `task ${record[index] ? 'is-checked' : ''}`;
-        button.innerHTML = `<span class="check"></span><span class="task-text">${task}</span>`;
+
+        button.innerHTML = `
+    <span class="check"></span>
+    <span class="task-content">
+      <span class="task-text">${task.label}</span>
+      ${task.options
+            ? `<select class="task-select">
+              <option value="">선택</option>
+              ${task.options
+              .map(option => `<option value="${option}">${option}</option>`)
+              .join('')}
+            </select>`
+            : ''
+          }
+    </span>
+  `;
+
         button.addEventListener('click', () => {
           record[index] = !record[index];
           state.records[todayKey] = record;
@@ -309,6 +658,95 @@
           renderHome();
           animatePercent(calculatePercent());
         });
+        const metaRecord = ensureMetaRecord(todayKey);
+        const bonusMetaRecord = ensureBonusMetaRecord(todayKey);
+        const select = button.querySelector('.task-select');
+
+        if (select) {
+          select.value = metaRecord[index] || '';
+
+          ['click', 'mousedown', 'touchstart'].forEach(eventName => {
+            select.addEventListener(eventName, event => {
+              event.stopPropagation();
+            });
+          });
+
+          select.addEventListener('change', event => {
+            metaRecord[index] = event.target.value;
+            state.records[getMetaKey(todayKey)] = metaRecord;
+            saveRecords();
+          });
+        }
+
+        todayTaskList.appendChild(button);
+
+
+
+
+
+
+      });
+
+      if (bonusTasks.length > 0) {
+        const bonusTitle = document.createElement('div');
+        bonusTitle.className = 'bonus-title';
+        bonusTitle.textContent = `보너스 항목 ${bonusDone} / ${bonusTasks.length}`;
+        todayTaskList.appendChild(bonusTitle);
+      }
+
+      bonusTasks.forEach((task, index) => {
+        const button = document.createElement('button');
+
+        button.className =
+          `task bonus-task ${bonusRecord[index] ? 'is-checked' : ''}`;
+
+        button.innerHTML = `
+    <span class="check"></span>
+
+    <span class="task-content">
+      <span class="task-text">
+        + ${task.label}
+      </span>
+
+      ${task.options
+            ? `<select class="task-select">
+              <option value="">선택</option>
+              ${task.options
+              .map(option =>
+                `<option value="${option}">
+                    ${option}
+                  </option>`
+              )
+              .join('')}
+            </select>`
+            : ''
+          }
+    </span>
+  `;
+
+        button.addEventListener('click', () => {
+          bonusRecord[index] = !bonusRecord[index];
+
+          state.records[`${todayKey}_bonus`] =
+            bonusRecord;
+
+          saveRecords();
+          renderHome();
+          animatePercent(calculatePercent());
+        });
+
+        const select =
+          button.querySelector('.task-select');
+
+        if (select) {
+          select.addEventListener(
+            'click',
+            event => {
+              event.stopPropagation();
+            }
+          );
+        }
+
         todayTaskList.appendChild(button);
       });
 
@@ -382,7 +820,7 @@
         const doneCount = record ? record.filter(Boolean).length : 0;
 
         dayButton.className = 'day';
-        // add weekend-specific classes
+
         const wk = date.getDay();
         if (wk === 0) dayButton.classList.add('is-sunday');
         if (wk === 6) dayButton.classList.add('is-saturday');
@@ -413,18 +851,39 @@
       const tasks = getTasksForDate(key);
       const record = ensureRecord(key);
       const done = record.filter(Boolean).length;
+
+      const bonusTasks = getBonusForDate(key);
+      const bonusRecord = ensureBonusRecord(key);
+      const bonusDone = bonusRecord.filter(Boolean).length;
+
       selectedDateTitle.textContent = formatEnglishDateWithWeekday(key);
-      selectedDateMeta.textContent = `${done} / ${tasks.length}`;
+      selectedDateMeta.textContent = `${done} / ${tasks.length} · 보너스 ${bonusDone} / ${bonusTasks.length}`;
       selectedTaskList.innerHTML = '';
+
+
+      const metaRecord = ensureMetaRecord(key);
+
 
       tasks.forEach((task, index) => {
         const row = document.createElement('div');
         row.className = 'mini-task';
         const inputId = `task-${key}-${index}`;
+
         row.innerHTML = `
-          <input id="${inputId}" type="checkbox" ${record[index] ? 'checked' : ''} />
-          <label for="${inputId}">${task}</label>
-        `;
+    <input id="${inputId}" type="checkbox" ${record[index] ? 'checked' : ''} />
+    <label for="${inputId}">${task.label}</label>
+
+    ${task.options
+            ? `<select class="task-select">
+            <option value="">선택</option>
+            ${task.options
+              .map(option => `<option value="${option}">${option}</option>`)
+              .join('')}
+          </select>`
+            : ''
+          }
+  `;
+
         const input = row.querySelector('input');
         input.addEventListener('change', () => {
           record[index] = input.checked;
@@ -435,16 +894,102 @@
           renderMonthTabs();
           animatePercent(calculatePercent());
         });
+
+        const select = row.querySelector('.task-select');
+
+        if (select) {
+          select.value = metaRecord[index] || '';
+
+          ['click', 'mousedown', 'touchstart'].forEach(eventName => {
+            select.addEventListener(eventName, event => {
+              event.stopPropagation();
+            });
+          });
+
+          select.addEventListener('change', event => {
+            metaRecord[index] = event.target.value;
+            state.records[getMetaKey(key)] = metaRecord;
+            saveRecords();
+          });
+        }
+
         selectedTaskList.appendChild(row);
       });
+
+
+
+
+      if (bonusTasks.length > 0) {
+        const bonusTitle = document.createElement('div');
+        bonusTitle.className = 'bonus-title';
+        bonusTitle.textContent = '보너스 항목';
+        selectedTaskList.appendChild(bonusTitle);
+      }
+      const bonusMetaRecord = ensureBonusMetaRecord(key);
+      bonusTasks.forEach((task, index) => {
+        const row = document.createElement('div');
+        row.className = 'mini-task bonus-mini-task';
+        const inputId = `bonus-${key}-${index}`;
+
+        row.innerHTML = `
+    <input id="${inputId}" type="checkbox" ${bonusRecord[index] ? 'checked' : ''} />
+
+    <label for="${inputId}">+ ${task.label}</label>
+
+    ${task.options
+            ? `<select class="task-select">
+            <option value="">선택</option>
+            ${task.options
+              .map(option => `<option value="${option}">${option}</option>`)
+              .join('')}
+          </select>`
+            : ''
+          }
+  `;
+
+        const input = row.querySelector('input');
+        input.addEventListener('change', () => {
+          bonusRecord[index] = input.checked;
+          state.records[`${key}_bonus`] = bonusRecord;
+          saveRecords();
+          renderSelectedDate();
+          renderCalendar();
+          renderMonthTabs();
+          animatePercent(calculatePercent());
+        });
+
+        const select = row.querySelector('.task-select');
+
+        if (select) {
+          select.value = bonusMetaRecord[index] || '';
+
+          ['click', 'mousedown', 'touchstart'].forEach(eventName => {
+            select.addEventListener(eventName, event => {
+              event.stopPropagation();
+            });
+          });
+
+          select.addEventListener('change', event => {
+            bonusMetaRecord[index] = event.target.value;
+            state.records[getBonusMetaKey(key)] = bonusMetaRecord;
+            saveRecords();
+          });
+        }
+
+        selectedTaskList.appendChild(row);
+      });
+
+
+
     }
 
     renderHome();
-    // set period range text in English
+
     const periodEl = document.getElementById('periodRange');
     if (periodEl) {
       periodEl.textContent = `Period: ${formatEnglishFullDate(START_DATE)} — ${formatEnglishFullDate(END_DATE)}`;
     }
   </script>
 </body>
+
 </html>
