@@ -25,16 +25,12 @@ body {
   font-family: "Gowun Dodum", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(
-      circle at 50% 0%,
+    radial-gradient(circle at 50% 0%,
       rgba(220, 184, 205, 0.2),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 100% 22%,
+      transparent 32%),
+    radial-gradient(circle at 100% 22%,
       rgba(173, 205, 224, 0.22),
-      transparent 30%
-    ),
+      transparent 30%),
     linear-gradient(180deg, #fbf8f2 0%, var(--bg) 100%);
 }
 
@@ -106,11 +102,9 @@ button {
   text-align: center;
   padding: 34px 18px 30px;
   border-radius: var(--radius-xl);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.78),
-    rgba(255, 255, 255, 0.44)
-  );
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(255, 255, 255, 0.44));
   border: 1px solid rgba(255, 255, 255, 0.74);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
@@ -123,11 +117,9 @@ button {
   position: absolute;
   inset: -44% -18% auto;
   height: 280px;
-  background: radial-gradient(
-    circle,
-    rgba(212, 188, 255, 0.28),
-    transparent 58%
-  );
+  background: radial-gradient(circle,
+      rgba(212, 188, 255, 0.28),
+      transparent 58%);
   filter: blur(10px);
   pointer-events: none;
   animation: softFloat 8s ease-in-out infinite alternate;
@@ -214,14 +206,12 @@ button {
   font-weight: 780;
   letter-spacing: -0.09em;
   line-height: 1;
-  background: linear-gradient(
-    120deg,
-    #f1a6c3,
-    #257aa5,
-    #453474,
-    #f180de,
-    #983bb4
-  );
+  background: linear-gradient(120deg,
+      #f1a6c3,
+      #257aa5,
+      #453474,
+      #f180de,
+      #983bb4);
   background-size: 260% 260%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -265,7 +255,7 @@ button {
 
 .today-card {
   margin-top: 22px;
-  padding: 22px;
+  padding: 25px 15px;
   border-radius: var(--radius-lg);
   background: var(--card);
   border: 1px solid rgba(255, 255, 255, 0.72);
@@ -302,14 +292,14 @@ button {
 }
 
 .task {
-display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 10px;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.68);
-    border: 1px solid rgba(23, 23, 23, 0.06);
-    transition: transform 0.18s ease, background 0.18s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 10px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(23, 23, 23, 0.06);
+  transition: transform 0.18s ease, background 0.18s ease;
 }
 
 
@@ -342,11 +332,11 @@ display: flex;
 }
 
 .task-text {
-    font-size: 17px;
-    font-weight: 500;
-    color: #222;
-    width: 70px;
-    text-align: left;
+  font-size: 17px;
+  font-weight: 500;
+  color: #222;
+  width: 70px;
+  text-align: left;
 }
 
 .fab {
@@ -471,6 +461,7 @@ display: flex;
 .weekdays span:first-child {
   color: #d9534f;
 }
+
 .weekdays span:last-child {
   color: #1e90ff;
 }
@@ -479,6 +470,7 @@ display: flex;
 .day.is-sunday {
   color: #d9534f;
 }
+
 .day.is-saturday {
   color: #1e90ff;
 }
@@ -487,6 +479,7 @@ display: flex;
 .day.is-sunday.is-active-range {
   color: #d9534f;
 }
+
 .day.is-saturday.is-active-range {
   color: #1e90ff;
 }
@@ -568,12 +561,12 @@ display: flex;
 }
 
 .mini-task {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 0;
-    border-top: 1px solid rgba(23, 23, 23, 0.06);
-    word-break: keep-all;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 0 2px;
+  border-top: 1px solid rgba(23, 23, 23, 0.06);
+  word-break: keep-all;
 }
 
 .mini-task:first-child {
@@ -581,15 +574,15 @@ display: flex;
 }
 
 .mini-task input {
-appearance: none;
-    width: 27px;
-    height: 22px;
-    border-radius: 50%;
-    border: 1px solid rgba(23, 23, 23, 0.22);
-    background: #fff;
-    margin: 0;
-    display: grid;
-    place-items: center;
+  appearance: none;
+  width: 27px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(23, 23, 23, 0.22);
+  background: #fff;
+  margin: 0;
+  display: grid;
+  place-items: center;
 }
 
 .mini-task input:checked {
@@ -605,8 +598,8 @@ appearance: none;
 }
 
 .mini-task label {
-    font-size: 16px;
-    width: 60px;
+  font-size: 16px;
+  width: 60px;
 }
 
 .empty-note {
@@ -617,28 +610,28 @@ appearance: none;
 }
 
 .task-content {
-    display: flex;
-    /* flex-direction: column; */
-    align-items: flex-start;
-    width: 100%;
-    gap: 0;
-    word-break: keep-all;
-    align-items: center;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: flex-start;
+  width: 100%;
+  gap: 0;
+  word-break: keep-all;
+  align-items: center;
 }
 
 .task-text {
-    font-size: 18px;
-    font-weight: 500;
-    color: #222;
+  font-size: 18px;
+  font-weight: 500;
+  color: #222;
 }
 
 .task-select {
-    width: 100%;
-    border: 0;
-    background: transparent;
-    color: #777;
-    font-size: 16px;
-    outline: none;
-    font-family: 'Gowun Dodum';
-    appearance: none;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #009688;
+  font-size: 15px;
+  outline: none;
+  font-family: 'Gowun Dodum';
+  appearance: none;
 }
