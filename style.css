@@ -302,16 +302,14 @@ button {
 }
 
 .task {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 14px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.68);
-  border: 1px solid rgba(23, 23, 23, 0.06);
-  transition:
-    transform 0.18s ease,
-    background 0.18s ease;
+display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 10px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.68);
+    border: 1px solid rgba(23, 23, 23, 0.06);
+    transition: transform 0.18s ease, background 0.18s ease;
 }
 
 
@@ -344,8 +342,11 @@ button {
 }
 
 .task-text {
-  font-size: 16px;
-  font-weight: 400;
+    font-size: 17px;
+    font-weight: 500;
+    color: #222;
+    width: 70px;
+    text-align: left;
 }
 
 .fab {
@@ -580,15 +581,15 @@ button {
 }
 
 .mini-task input {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid rgba(23, 23, 23, 0.22);
-  background: #fff;
-  margin: 0;
-  display: grid;
-  place-items: center;
+appearance: none;
+    width: 27px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(23, 23, 23, 0.22);
+    background: #fff;
+    margin: 0;
+    display: grid;
+    place-items: center;
 }
 
 .mini-task input:checked {
@@ -604,7 +605,8 @@ button {
 }
 
 .mini-task label {
-  font-size: 14px;
+    font-size: 16px;
+    width: 60px;
 }
 
 .empty-note {
@@ -616,14 +618,15 @@ button {
 
 .task-content {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: flex-start;
     width: 100%;
     gap: 0;
+    word-break: keep-all;
+    align-items: center;
 }
 
 .task-text {
-    margin-bottom: 8px;
     font-size: 18px;
     font-weight: 500;
     color: #222;
@@ -634,6 +637,8 @@ button {
     border: 0;
     background: transparent;
     color: #777;
-    font-size: 14px;
+    font-size: 16px;
     outline: none;
+    font-family: 'Gowun Dodum';
+    appearance: none;
 }
