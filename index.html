@@ -113,268 +113,46 @@
     ];
 
     const taskTemplates = {
-      weekday: [
-
+      week: [
         {
           label: '러닝',
-          options: [
-            '러닝 10분',
-            '걷기 20분',
-            '스트레칭 10분',
-            '회복 / 찜질'
-          ]
+          options: ['러닝 10분', '걷기 20분', '스트레칭 10분', '회복 / 찜질']
         },
-
         {
           label: '영어',
-          options: [
-            '출퇴근 듣기',
-            '쉐도잉',
-            '오픽 스크립트',
-            '영어회화 수업'
-          ]
+          options: ['출퇴근 듣기', '쉐도잉', '오픽 스크립트', '영어회화 수업']
         },
         {
           label: '요가',
-          options: [
-            '요가 수업',
-            '홈 요가30분',
-            '홈 스트레칭 30분'
-          ]
+          options: ['요가 수업', '홈 요가30분', '홈 스트레칭 30분']
         },
-
         {
           label: '피아노',
-          options: [
-            '하농 10분',
-            '연주곡 리스트',
-            '레슨곡 30분',
-            '연습실 1시간'
-          ]
+          options: ['하농 10분', '연주곡 리스트', '레슨곡 30분', '연습실 1시간']
         },
-
         {
           label: '드로잉',
-          options: [
-            '20분 스케치',
-            '사진 소묘',
-            '아이디어 드로잉',
-            '글쓰기+드로잉',
-            '그림서치-10개'
-          ]
+          options: ['20분 스케치', '사진 소묘', '아이디어 드로잉', '글쓰기+드로잉', '그림서치-10개']
         }
-      ],
-      friday: [
-
-        {
-          label: '러닝',
-          options: [
-            '러닝 10분',
-            '걷기 20분',
-            '스트레칭 10분',
-            '회복 / 찜질'
-          ]
-        },
-
-        {
-          label: '영어',
-          options: [
-            '출퇴근 듣기',
-            '쉐도잉',
-            '오픽 스크립트',
-            '영어회화 수업'
-          ]
-        },
-        {
-          label: '요가',
-          options: [
-            '요가 수업',
-            '홈 요가30분',
-            '홈 스트레칭 30분'
-          ]
-        },
-
-        {
-          label: '피아노',
-          options: [
-            '하농 10분',
-            '연주곡 리스트',
-            '레슨곡 30분',
-            '연습실 1시간'
-          ]
-        },
-
-        {
-          label: '드로잉',
-          options: [
-            '20분 스케치',
-            '사진 소묘',
-            '아이디어 드로잉',
-            '글쓰기+드로잉',
-            '그림서치-10개'
-          ]
-        }
-      ],
-      saturday: [
-
-        {
-          label: '러닝',
-          options: [
-            '러닝 10분',
-            '걷기 20분',
-            '스트레칭 10분',
-            '회복 / 찜질'
-          ]
-        },
-
-        {
-          label: '영어',
-          options: [
-            '출퇴근 듣기',
-            '쉐도잉',
-            '오픽 스크립트',
-            '영어회화 수업'
-          ]
-        },
-        {
-          label: '요가',
-          options: [
-            '요가 수업',
-            '홈 요가30분',
-            '홈 스트레칭 30분'
-          ]
-        },
-
-        {
-          label: '피아노',
-          options: [
-            '하농 10분',
-            '연주곡 리스트',
-            '레슨곡 30분',
-            '연습실 1시간'
-          ]
-        },
-
-        {
-          label: '드로잉',
-          options: [
-            '20분 스케치',
-            '사진 소묘',
-            '아이디어 드로잉',
-            '글쓰기+드로잉',
-            '그림서치-10개'
-          ]
-        }
-      ],
-      sunday: [
-
-        {
-          label: '러닝',
-          options: [
-            '러닝 10분',
-            '걷기 20분',
-            '스트레칭 10분',
-            '회복 / 찜질'
-          ]
-        },
-
-        {
-          label: '영어',
-          options: [
-            '출퇴근 듣기',
-            '쉐도잉',
-            '오픽 스크립트',
-            '영어회화 수업'
-          ]
-        },
-        {
-          label: '요가',
-          options: [
-            '요가 수업',
-            '홈 요가30분',
-            '홈 스트레칭 30분'
-          ]
-        },
-
-        {
-          label: '피아노',
-          options: [
-            '하농 10분',
-            '연주곡 리스트',
-            '레슨곡 30분',
-            '연습실 1시간'
-          ]
-        },
-
-        {
-          label: '드로잉',
-          options: [
-            '20분 스케치',
-            '사진 소묘',
-            '아이디어 드로잉',
-            '글쓰기+드로잉',
-            '그림서치-10개'
-          ]
-        }
-      ],
+      ]
     };
 
-    // 보너스 항목: 전체 목표 개수에는 포함되지 않고, 체크 시 추가 점수만 올라감
     const bonusTemplates = {
-      weekday: [
-
+      week: [
         {
-          label: 'Bonus 추가작업',
-          options: [
-            '피아노 1t',
-            '드로잉 1t',
-            '요가 1t',
-            '요가 1t',
-            '러닝 1t'
-          ]
-        }
-      ],
-      friday: [
-
+          label: 'Add 1',
+          options: ['피아노 1t', '드로잉 1t', '요가 1t', '요가 1t', '러닝 1t']
+        },
         {
-          label: 'Bonus 추가작업',
-          options: [
-            '피아노 1t',
-            '드로잉 1t',
-            '요가 1t',
-            '요가 1t',
-            '러닝 1t'
-          ]
-        }
-      ],
-      saturday: [
-
+          label: 'Add 2',
+          options: ['피아노 1t', '드로잉 1t', '요가 1t', '요가 1t', '러닝 1t']
+        },
         {
-          label: 'Bonus 추가작업',
-          options: [
-            '피아노 1t',
-            '드로잉 1t',
-            '요가 1t',
-            '요가 1t',
-            '러닝 1t'
-          ]
+          label: 'Add 3',
+          options: ['피아노 1t', '드로잉 1t', '요가 1t', '요가 1t', '러닝 1t']
         }
-      ],
-      sunday: [
-
-        {
-          label: 'Bonus 추가작업',
-          options: [
-            '피아노 1t',
-            '드로잉 1t',
-            '요가 1t',
-            '요가 1t',
-            '러닝 1t'
-          ]
-        }
-      ],
+      ]
     };
-
     const state = {
       selectedMonthIndex: getInitialMonthIndex(),
       selectedDate: getTodayKey(),
@@ -512,11 +290,11 @@
     }
 
     function getTasksForDate(key) {
-      return taskTemplates[getDayType(key)];
+      return taskTemplates.week;
     }
 
     function getBonusForDate(key) {
-      return bonusTemplates[getDayType(key)] || [];
+      return bonusTemplates.week;
     }
 
     function ensureRecord(key) {
@@ -704,8 +482,7 @@
     <span class="check"></span>
 
     <span class="task-content">
-      <span class="task-text">
-        + ${task.label}
+      <span class="task-text">${task.label}
       </span>
 
       ${task.options
@@ -735,18 +512,24 @@
           animatePercent(calculatePercent());
         });
 
-        const select =
-          button.querySelector('.task-select');
+        const bonusMetaRecord = ensureBonusMetaRecord(todayKey);
+        const select = button.querySelector('.task-select');
 
         if (select) {
-          select.addEventListener(
-            'click',
-            event => {
-              event.stopPropagation();
-            }
-          );
-        }
+          select.value = bonusMetaRecord[index] || '';
 
+          ['click', 'mousedown', 'touchstart'].forEach(eventName => {
+            select.addEventListener(eventName, event => {
+              event.stopPropagation();
+            });
+          });
+
+          select.addEventListener('change', event => {
+            bonusMetaRecord[index] = event.target.value;
+            state.records[getBonusMetaKey(todayKey)] = bonusMetaRecord;
+            saveRecords();
+          });
+        }
         todayTaskList.appendChild(button);
       });
 
@@ -934,7 +717,7 @@
         row.innerHTML = `
     <input id="${inputId}" type="checkbox" ${bonusRecord[index] ? 'checked' : ''} />
 
-    <label for="${inputId}">+ ${task.label}</label>
+    <label for="${inputId}">${task.label}</label>
 
     ${task.options
             ? `<select class="task-select">
