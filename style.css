@@ -304,7 +304,9 @@ button {
   transition: transform 0.18s ease, background 0.18s ease;
 }
 
-
+button.task.bonus-task .task-text {
+    width: 160px;
+}
 
 .check {
   flex: 0 0 auto;
