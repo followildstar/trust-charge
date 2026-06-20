@@ -467,7 +467,7 @@
       if (bonusTasks.length > 0) {
         const bonusTitle = document.createElement('div');
         bonusTitle.className = 'bonus-title';
-        bonusTitle.textContent = `가산점 항목 ${bonusDone} / ${bonusTasks.length}`;
+        bonusTitle.textContent = `⭐ 가산점 항목 ${bonusDone} / ${bonusTasks.length}`;
         todayTaskList.appendChild(bonusTitle);
       }
 
@@ -704,7 +704,7 @@
       if (bonusTasks.length > 0) {
         const bonusTitle = document.createElement('div');
         bonusTitle.className = 'bonus-title';
-        bonusTitle.textContent = '가산점 항목';
+        bonusTitle.textContent = '⭐가산점 항목';
         selectedTaskList.appendChild(bonusTitle);
       }
       const bonusMetaRecord = ensureBonusMetaRecord(key);
