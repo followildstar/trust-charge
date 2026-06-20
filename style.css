@@ -285,7 +285,9 @@ button {
   font-size: 12px;
   color: var(--muted);
 }
-
+.bonus-title {
+    margin-top: 20px;
+}
 .task-list {
   display: grid;
   gap: 10px;
