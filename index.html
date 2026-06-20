@@ -238,18 +238,67 @@
       localStorage.setItem('trustChargeRecords', JSON.stringify(state.records));
     }
 
-    function exportJSON() {
-      const data = localStorage.getItem('trustChargeRecords') || '{}';
-      const blob = new Blob([data], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
+   function exportCSV() {
+  const rows = [
+    ['날짜', '유형', '항목', '완료여부', '선택항목']
+  ];
 
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'trust-charge-records.json';
-      a.click();
+  Object.keys(state.records).forEach(key => {
+    if (!isWithinRange(key)) return;
+    if (key.includes('_')) return;
+    if (!Array.isArray(state.records[key])) return;
 
-      URL.revokeObjectURL(url);
-    }
+    const tasks = getTasksForDate(key);
+    const checks = state.records[key];
+    const meta = state.records[getMetaKey(key)] || {};
+
+    tasks.forEach((task, index) => {
+      rows.push([
+        key,
+        '기본',
+        task.label,
+        checks[index] ? '완료' : '미완료',
+        meta[index] || ''
+      ]);
+    });
+
+    const bonusTasks = getBonusForDate(key);
+    const bonusChecks = state.records[`${key}_bonus`] || [];
+    const bonusMeta = state.records[getBonusMetaKey(key)] || {};
+
+    bonusTasks.forEach((task, index) => {
+      rows.push([
+        key,
+        '보너스',
+        task.label,
+        bonusChecks[index] ? '완료' : '미완료',
+        bonusMeta[index] || ''
+      ]);
+    });
+  });
+
+  const csvContent = rows
+    .map(row =>
+      row
+        .map(value => `"${String(value).replace(/"/g, '""')}"`)
+        .join(',')
+    )
+    .join('\n');
+
+  const blob = new Blob(
+    ['\uFEFF' + csvContent],
+    { type: 'text/csv;charset=utf-8;' }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'trust-charge-records.csv';
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
 
     function toDate(dateString) {
       return new Date(dateString + 'T00:00:00');
@@ -793,7 +842,7 @@
     const exportDataBtn = document.getElementById('exportData');
 
     if (exportDataBtn) {
-      exportDataBtn.addEventListener('click', exportJSON);
+      exportDataBtn.addEventListener('click', exportCSV);
     }
 
     const periodEl = document.getElementById('periodRange');
