@@ -8,7 +8,7 @@
   --primary: #2a719f;
   --accent: #c7a46b;
   --accent-soft: #eadfc9;
-  --success: #37fff8;
+  --success: #45acff;
   --shadow: 0 24px 70px rgba(40, 34, 25, 0.08);
   --radius-xl: 25px;
   --radius-lg: 20px;
@@ -526,13 +526,18 @@ button.task.bonus-task .task-text {
 .day.has-partial::after {
   content: "";
   position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
+  width: 13px;
+  height: 3px;
+  border-radius: 3px;
   bottom: 6px;
-  background: #c8b4ff;
+  background: #f2ac9b;
 }
-
+.day.is-sunday.is-active-range.is-today.is-selected {
+    color: #ffaeae;
+}
+.day.is-saturday.is-active-range.is-selected {
+    color: #9898ff;
+}
 .day.has-complete::after {
   background: var(--success);
 }
