@@ -49,7 +49,6 @@
             <div class="percent-number"><span id="percentText">20</span><span>%</span></div>
           </div>
         </div>
-        <!-- <p class="hero-copy">말을 아낀다. 퍼센트가 높을 수록, 말을 늘려가기<br>가벼운 말로 나를 소모하지 말자.<br>오늘 할일들을 해낼때마다<br>스스로에 대한 신뢰가 조금씩 누적.</p> -->
       </section>
 
       <section class="today-card">
@@ -100,7 +99,7 @@
     const BASE_PERCENT = 30;
     const CIRCLE_LENGTH = 666;
 
-    // 보너스 1개 체크 시 추가되는 퍼센트
+    // 가산점 1개 체크 시 추가되는 퍼센트
     const BONUS_POINT = 0.3;
 
     const EN_MONTH_NAMES = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
@@ -120,19 +119,19 @@
         },
         {
           label: '영어',
-          options: ['출퇴근 듣기', '쉐도잉', '오픽 스크립트', '영어회화 수업']
+          options: ['출퇴근 듣기', '쉐도잉','스크립트 제작', '오픽 스크립트 암기', '핑퐁게임']
         },
         {
           label: '요가',
-          options: ['요가 수업', '홈 요가30분', '홈 스트레칭 30분']
+          options: ['요가 수업', '홈 요가30분']
         },
         {
           label: '피아노',
-          options: ['하농 10분', '연주곡 리스트', '레슨곡 30분', '연습실 1시간']
+          options: ['하농 10분', '연주곡 리스트', '레슨곡 30분']
         },
         {
           label: '드로잉',
-          options: ['20분 스케치', '사진 소묘', '아이디어 드로잉', '글쓰기+드로잉', '그림서치-10개']
+          options: ['20분 스케치', '사진 소묘', '아이디어 드로잉', '그림서치']
         }
       ]
     };
@@ -140,16 +139,16 @@
     const bonusTemplates = {
       week: [
         {
-          label: 'Add 1',
-          options: ['피아노 1t', '드로잉 1t', '영어 1t', '요가 1t', '러닝 1t']
+          label: '식단관리 ',
+          options: ['1000 칼로리 섭취']
         },
         {
-          label: 'Add 2',
-          options: ['피아노 1t', '드로잉 1t', '영어 1t', '요가 1t', '러닝 1t']
+          label: '가산점 항목(exercise)',
+          options: ['수영장', '피아노 연습실', '토요일 요가수업', '야외러닝' ]
         },
         {
-          label: 'Add 3',
-          options: ['피아노 1t', '드로잉 1t', '영어 1t', '요가 1t', '러닝 1t']
+          label: '가산점 항목(creative)',
+          options: ['디자인작업', '코딩작업', '영어 스크립트 녹음', '글쓰기' ]
         }
       ]
     };
@@ -405,7 +404,7 @@
       const bonusDone = bonusRecord.filter(Boolean).length;
 
       todayChip.textContent = formatEnglishDateWithWeekday(todayKey);
-      todaySub.textContent = `${tasks.length} 기본 항목 · 보너스 ${bonusTasks.length}`;
+      todaySub.textContent = `${tasks.length} 기본 항목 · 가산점 ${bonusTasks.length}`;
       todayCount.textContent = `${done} / ${tasks.length}`;
       todayTaskList.innerHTML = '';
 
@@ -468,7 +467,7 @@
       if (bonusTasks.length > 0) {
         const bonusTitle = document.createElement('div');
         bonusTitle.className = 'bonus-title';
-        bonusTitle.textContent = `보너스 항목 ${bonusDone} / ${bonusTasks.length}`;
+        bonusTitle.textContent = `가산점 항목 ${bonusDone} / ${bonusTasks.length}`;
         todayTaskList.appendChild(bonusTitle);
       }
 
@@ -640,7 +639,7 @@
       const bonusDone = bonusRecord.filter(Boolean).length;
 
       selectedDateTitle.textContent = formatEnglishDateWithWeekday(key);
-      selectedDateMeta.textContent = `${done} / ${tasks.length} · 보너스 ${bonusDone} / ${bonusTasks.length}`;
+      selectedDateMeta.textContent = `${done} / ${tasks.length} · 가산점 ${bonusDone} / ${bonusTasks.length}`;
       selectedTaskList.innerHTML = '';
 
 
@@ -705,7 +704,7 @@
       if (bonusTasks.length > 0) {
         const bonusTitle = document.createElement('div');
         bonusTitle.className = 'bonus-title';
-        bonusTitle.textContent = '보너스 항목';
+        bonusTitle.textContent = '가산점 항목';
         selectedTaskList.appendChild(bonusTitle);
       }
       const bonusMetaRecord = ensureBonusMetaRecord(key);
