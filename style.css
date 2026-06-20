@@ -533,10 +533,10 @@ button.task.bonus-task .task-text {
   background: #f2ac9b;
 }
 .day.is-sunday.is-active-range.is-today.is-selected {
-    color: #ffaeae;
+    color: #fff;
 }
 .day.is-saturday.is-active-range.is-selected {
-    color: #9898ff;
+    color: #fff;
 }
 .day.has-complete::after {
   background: var(--success);
