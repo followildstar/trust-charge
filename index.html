@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 
 <head>
   <meta charset="UTF-8" />
@@ -109,7 +109,7 @@
     const BASE_PERCENT = 30;
     const CIRCLE_LENGTH = 666;
 
-    // 가산점 1개 체크 시 추가되는 퍼센트
+    // PLUS 1개 체크 시 추가되는 퍼센트
     const BONUS_POINT = 0.3;
 
     const EN_MONTH_NAMES = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
@@ -149,15 +149,15 @@
     const bonusTemplates = {
       week: [
         {
-          label: '식단관리 ',
+          label: 'Eating',
           options: ['1000 칼로리 섭취']
         },
         {
-          label: '가산점 항목(exercise)',
+          label: 'Acting',
           options: ['수영장', '피아노 연습실', '토요일 요가수업', '야외러닝' ]
         },
         {
-          label: '가산점 항목(creative)',
+          label: 'Thinking',
           options: ['디자인작업', '코딩작업', '영어 스크립트 녹음', '글쓰기' ]
         }
       ]
@@ -476,7 +476,7 @@
       const bonusDone = bonusRecord.filter(Boolean).length;
 
       todayChip.textContent = formatEnglishDateWithWeekday(todayKey);
-      todaySub.textContent = `${tasks.length} 기본 항목 · 가산점 ${bonusTasks.length}`;
+      todaySub.textContent = `${tasks.length} 기본 항목 · PLUS ${bonusTasks.length}`;
       todayCount.textContent = `${done} / ${tasks.length}`;
       todayTaskList.innerHTML = '';
 
@@ -539,7 +539,7 @@
       if (bonusTasks.length > 0) {
         const bonusTitle = document.createElement('div');
         bonusTitle.className = 'bonus-title';
-        bonusTitle.textContent = `⭐ 가산점 항목 ${bonusDone} / ${bonusTasks.length}`;
+        bonusTitle.textContent = `⭐ PLUS 항목 ${bonusDone} / ${bonusTasks.length}`;
         todayTaskList.appendChild(bonusTitle);
       }
 
@@ -711,7 +711,7 @@
       const bonusDone = bonusRecord.filter(Boolean).length;
 
       selectedDateTitle.textContent = formatEnglishDateWithWeekday(key);
-      selectedDateMeta.textContent = `${done} / ${tasks.length} · 가산점 ${bonusDone} / ${bonusTasks.length}`;
+      selectedDateMeta.textContent = `${done} / ${tasks.length} · PLUS ${bonusDone} / ${bonusTasks.length}`;
       selectedTaskList.innerHTML = '';
 
 
@@ -776,7 +776,7 @@
       if (bonusTasks.length > 0) {
         const bonusTitle = document.createElement('div');
         bonusTitle.className = 'bonus-title';
-        bonusTitle.textContent = '⭐가산점 항목';
+        bonusTitle.textContent = '⭐ PLUS';
         selectedTaskList.appendChild(bonusTitle);
       }
       const bonusMetaRecord = ensureBonusMetaRecord(key);
