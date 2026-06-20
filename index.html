@@ -61,6 +61,16 @@
         </div>
         <div class="task-list" id="todayTaskList"></div>
       </section>
+
+      <!-- 내보내기 버튼 -->
+       <section class="export-card">
+        <button class="export-btn" id="exportData">
+          데이터 내보내기
+        </button>
+      </section>
+
+
+
     </section>
 
     <section id="calendarScreen" class="screen">
@@ -226,6 +236,19 @@
 
     function saveRecords() {
       localStorage.setItem('trustChargeRecords', JSON.stringify(state.records));
+    }
+
+    function exportJSON() {
+      const data = localStorage.getItem('trustChargeRecords') || '{}';
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'trust-charge-records.json';
+      a.click();
+
+      URL.revokeObjectURL(url);
     }
 
     function toDate(dateString) {
@@ -766,6 +789,12 @@
     }
 
     renderHome();
+
+    const exportDataBtn = document.getElementById('exportData');
+
+    if (exportDataBtn) {
+      exportDataBtn.addEventListener('click', exportJSON);
+    }
 
     const periodEl = document.getElementById('periodRange');
     if (periodEl) {
