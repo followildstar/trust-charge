@@ -606,6 +606,10 @@ button.task.bonus-task .task-text {
   width: 60px;
 }
 
+.mini-task.bonus-mini-task label {
+    width: 120px;
+}
+
 .empty-note {
   padding: 18px 0 4px;
   color: var(--muted);
