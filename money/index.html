@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>통장 관리 시스템</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg: #F7F6F3;
+    --surface: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-mid: #555;
+    --ink-light: #999;
+    --border: #E5E4E0;
+
+    --c-salary:  #2C2C2C;
+    --c-living:  #4A7C6F;
+    --c-saving:  #3D5A80;
+    --c-emergency: #8B5E3C;
+
+    --radius: 14px;
+    --gap: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100dvh;
+    padding: 0 0 60px;
+  }
+
+  /* ── Header ── */
+  .header {
+    padding: 52px 24px 28px;
+    background: var(--bg);
+  }
+  .header-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+  }
+  .header-sub {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+
+  /* ── Why section ── */
+  .why {
+    margin: 0 20px var(--gap);
+    padding: 20px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: var(--radius);
+  }
+  .why-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 10px;
+  }
+  .why-body {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.85);
+  }
+  .why-highlight {
+    display: block;
+    margin-top: 14px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  /* ── Account cards ── */
+  .section {
+    margin: 0 20px var(--gap);
+  }
+
+  .account-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .card-header {
+    padding: 18px 20px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .card-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+  .card-meta {}
+  .card-num {
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+    margin-bottom: 3px;
+  }
+  .card-name {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .card-role {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 20px;
+  }
+
+  .card-body {
+    padding: 16px 20px 20px;
+  }
+
+  /* accordion toggle */
+  .acc-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .acc-toggle-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+  .acc-toggle-icon {
+    font-size: 16px;
+    color: var(--ink-light);
+    transition: transform 0.25s;
+    line-height: 1;
+  }
+  .acc-toggle[aria-expanded="true"] .acc-toggle-icon { transform: rotate(45deg); }
+
+  .acc-content {
+    display: none;
+    padding-top: 14px;
+  }
+  .acc-content.open { display: block; }
+
+  /* items / steps */
+  .item-group {
+    margin-bottom: 14px;
+  }
+  .item-group:last-child { margin-bottom: 0; }
+  .item-group-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 7px;
+  }
+  .item-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .item-chip {
+    font-size: 12px;
+    color: var(--ink-mid);
+    background: var(--bg);
+    padding: 4px 10px;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+  }
+
+  .steps {
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    counter-increment: step;
+  }
+  .step-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--ink);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-text {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+  .step-note {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  /* rules */
+  .rules {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 2px;
+  }
+  .rule {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .rule-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--ink-light);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .rule-text {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+  }
+
+  /* can / cannot */
+  .ok-list, .no-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .ok-chip {
+    font-size: 12px;
+    color: var(--c-living);
+    background: rgba(74,124,111,0.08);
+    padding: 4px 10px;
+    border-radius: 30px;
+  }
+  .no-chip {
+    font-size: 12px;
+    color: var(--c-emergency);
+    background: rgba(139,94,60,0.08);
+    padding: 4px 10px;
+    border-radius: 30px;
+  }
+  .list-sublabel {
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 8px 0 5px;
+  }
+  .list-sublabel:first-child { margin-top: 0; }
+
+  /* goal amount */
+  .goal-row {
+    display: flex;
+    gap: 10px;
+  }
+  .goal-box {
+    flex: 1;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+  }
+  .goal-box-label {
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .goal-box-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* budget preview */
+  .budget-card {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+  .budget-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 13px;
+  }
+  .budget-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+  .budget-label { color: var(--ink-mid); }
+  .budget-amount { font-weight: 500; color: var(--ink); }
+  .budget-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1.5px solid var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* ── Flow diagram ── */
+  .flow {
+    margin: 0 20px var(--gap);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .flow-title {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 16px;
+  }
+  .flow-nodes {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .flow-node {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .flow-node-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .flow-node-info {}
+  .flow-node-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .flow-node-desc {
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-top: 1px;
+  }
+  .flow-arrow {
+    margin-left: 18px;
+    color: var(--ink-light);
+    font-size: 16px;
+    line-height: 1;
+    padding: 4px 0;
+  }
+
+  /* ── Principle footer ── */
+  .principle {
+    margin: 0 20px var(--gap);
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .principle-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 14px;
+  }
+  .principle-line {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+  .principle-line + .principle-line {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* color helpers */
+  .dot-salary    { background: var(--c-salary); }
+  .dot-living    { background: var(--c-living); }
+  .dot-saving    { background: var(--c-saving); }
+  .dot-emergency { background: var(--c-emergency); }
+
+  .node-salary    { background: rgba(44,44,44,0.08); }
+  .node-living    { background: rgba(74,124,111,0.1); }
+  .node-saving    { background: rgba(61,90,128,0.1); }
+  .node-emergency { background: rgba(139,94,60,0.1); }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <p class="header-eyebrow">Money System</p>
+  <h1 class="header-title">통장 관리<br>시스템</h1>
+  <p class="header-sub">혜택이 아닌 기준으로 돈을 쓴다.</p>
+</header>
+
+<!-- Why -->
+<div class="why">
+  <p class="why-label">이 시스템의 목적</p>
+  <p class="why-body">
+    과거에는 카드 혜택, 포인트, 할인 이벤트를 따라다니며 관리했다.<br>
+    돈의 목적이 흐려지고, 소비 기준도 흔들렸다.
+  </p>
+  <span class="why-highlight">돈을 목적별로 구분하여, 내 기준으로 사용하는 것.</span>
+</div>
+
+<!-- Flow overview -->
+<div class="flow">
+  <p class="flow-title">돈의 흐름</p>
+  <div class="flow-nodes">
+    <div class="flow-node">
+      <div class="flow-node-icon node-salary">💰</div>
+      <div class="flow-node-info">
+        <div class="flow-node-name">월급 통장</div>
+        <div class="flow-node-desc">분배 출발점</div>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-node">
+      <div class="flow-node-icon node-living">🛒</div>
+      <div class="flow-node-info">
+        <div class="flow-node-name">생활비 통장</div>
+        <div class="flow-node-desc">현재의 나</div>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-node">
+      <div class="flow-node-icon node-saving">📈</div>
+      <div class="flow-node-info">
+        <div class="flow-node-name">저축 통장</div>
+        <div class="flow-node-desc">미래의 나</div>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-node">
+      <div class="flow-node-icon node-emergency">🛡️</div>
+      <div class="flow-node-info">
+        <div class="flow-node-name">비상금 통장</div>
+        <div class="flow-node-desc">안전망</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1. 월급 통장 -->
+<div class="section">
+  <div class="account-card">
+    <div class="card-header">
+      <div class="card-dot dot-salary"></div>
+      <div class="card-meta">
+        <div class="card-num">01</div>
+        <div class="card-name">월급 통장</div>
+        <div class="card-role">모든 돈이 처음 들어오는 출발점.<br>분배만 하고 남겨두지 않는다.</div>
+      </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+
+      <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+        <span class="acc-toggle-label">포함 항목</span>
+        <span class="acc-toggle-icon">+</span>
+      </button>
+      <div class="acc-content">
+        <div class="item-list">
+          <span class="item-chip">월세</span>
+          <span class="item-chip">관리비</span>
+          <span class="item-chip">휴대폰</span>
+          <span class="item-chip">건강보험</span>
+          <span class="item-chip">인터넷</span>
+          <span class="item-chip">자동이체</span>
+          <span class="item-chip">구독 서비스</span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+          <span class="acc-toggle-label">관리 순서</span>
+          <span class="acc-toggle-icon">+</span>
+        </button>
+        <div class="acc-content">
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text">월급 입금</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text">고정지출 자동이체</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text">생활비 통장 이체</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text">저축 통장 이체</div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-text">비상금 통장 이체</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+          <span class="acc-toggle-label">원칙</span>
+          <span class="acc-toggle-icon">+</span>
+        </button>
+        <div class="acc-content">
+          <div class="rules">
+            <div class="rule"><div class="rule-dot"></div><div class="rule-text">체크카드 연결 금지</div></div>
+            <div class="rule"><div class="rule-dot"></div><div class="rule-text">생활비 사용 금지</div></div>
+            <div class="rule"><div class="rule-dot"></div><div class="rule-text">잔액 최소 유지</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 2. 생활비 통장 -->
+<div class="section">
+  <div class="account-card">
+    <div class="card-header">
+      <div class="card-dot dot-living"></div>
+      <div class="card-meta">
+        <div class="card-num">02</div>
+        <div class="card-name">생활비 통장</div>
+        <div class="card-role">현재의 나. 이번 달을 살아가는 돈.</div>
+      </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+
+      <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+        <span class="acc-toggle-label">포함 항목</span>
+        <span class="acc-toggle-icon">+</span>
+      </button>
+      <div class="acc-content">
+        <div class="item-group">
+          <div class="item-group-label">생활</div>
+          <div class="item-list">
+            <span class="item-chip">식비</span>
+            <span class="item-chip">카페</span>
+            <span class="item-chip">편의점</span>
+            <span class="item-chip">고양이</span>
+          </div>
+        </div>
+        <div class="item-group">
+          <div class="item-group-label">취미</div>
+          <div class="item-list">
+            <span class="item-chip">그림</span>
+            <span class="item-chip">피아노</span>
+            <span class="item-chip">전시회</span>
+            <span class="item-chip">영화</span>
+          </div>
+        </div>
+        <div class="item-group">
+          <div class="item-group-label">개인</div>
+          <div class="item-list">
+            <span class="item-chip">의류</span>
+            <span class="item-chip">화장품</span>
+            <span class="item-chip">생활용품</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+          <span class="acc-toggle-label">예산 예시</span>
+          <span class="acc-toggle-icon">+</span>
+        </button>
+        <div class="acc-content">
+          <div class="budget-card">
+            <div class="budget-row">
+              <span class="budget-label">식비</span>
+              <span class="budget-amount">30만원</span>
+            </div>
+            <div class="budget-row">
+              <span class="budget-label">취미</span>
+              <span class="budget-amount">10만원</span>
+            </div>
+            <div class="budget-row">
+              <span class="budget-label">개인 소비</span>
+              <span class="budget-amount">10만원</span>
+            </div>
+          </div>
+          <div class="budget-total-row">
+            <span>월 생활비</span>
+            <span>70만원</span>
+          </div>
+          <p class="step-note" style="margin-top:10px;">월초에 한 번 충전. 추가 충전 없음.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+          <span class="acc-toggle-label">원칙</span>
+          <span class="acc-toggle-icon">+</span>
+        </button>
+        <div class="acc-content">
+          <div class="rules">
+            <div class="rule"><div class="rule-dot"></div><div class="rule-text">통장이 비어가면 소비를 줄인다</div></div>
+            <div class="rule"><div class="rule-dot"></div><div class="rule-text">저축 통장에서 꺼내지 않는다</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 3. 저축 통장 -->
+<div class="section">
+  <div class="account-card">
+    <div class="card-header">
+      <div class="card-dot dot-saving"></div>
+      <div class="card-meta">
+        <div class="card-num">03</div>
+        <div class="card-name">저축 통장</div>
+        <div class="card-role">미래의 나. 자산을 만드는 돈.</div>
+      </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+
+      <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+        <span class="acc-toggle-label">포함 항목</span>
+        <span class="acc-toggle-icon">+</span>
+      </button>
+      <div class="acc-content">
+        <div class="item-group">
+          <div class="item-group-label">단기 목표</div>
+          <div class="item-list">
+            <span class="item-chip">목돈마련</span>
+            <span class="item-chip">이사비</span>
+          </div>
+        </div>
+        <div class="item-group">
+          <div class="item-group-label">중장기 목표</div>
+          <div class="item-list">
+            <span class="item-chip">예금</span>
+            <span class="item-chip">적금</span>
+            <span class="item-chip">ISA</span>
+          </div>
+        </div>
+        <div class="item-group">
+          <div class="item-group-label">투자</div>
+          <div class="item-list">
+            <span class="item-chip">ETF</span>
+            <span class="item-chip">주식</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+          <span class="acc-toggle-label">원칙</span>
+          <span class="acc-toggle-icon">+</span>
+        </button>
+        <div class="acc-content">
+          <div class="rules">
+            <div class="rule"><div class="rule-dot"></div><div class="rule-text">월급이 들어오면 <strong>가장 먼저</strong> 저축한다</div></div>
+            <div class="rule"><div class="rule-dot"></div><div class="rule-text">남은 돈으로 생활한다</div></div>
+            <div class="rule"><div class="rule-dot"></div><div class="rule-text">생활비 부족을 이유로 건드리지 않는다</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 4. 비상금 통장 -->
+<div class="section">
+  <div class="account-card">
+    <div class="card-header">
+      <div class="card-dot dot-emergency"></div>
+      <div class="card-meta">
+        <div class="card-num">04</div>
+        <div class="card-name">비상금 통장</div>
+        <div class="card-role">안전망. 불편함이 아닌 위험을 막는 돈.</div>
+      </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+
+      <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+        <span class="acc-toggle-label">사용 가능 / 불가</span>
+        <span class="acc-toggle-icon">+</span>
+      </button>
+      <div class="acc-content">
+        <p class="list-sublabel">사용 가능</p>
+        <div class="ok-list">
+          <span class="ok-chip">병원비</span>
+          <span class="ok-chip">치과</span>
+          <span class="ok-chip">휴대폰 수리</span>
+          <span class="ok-chip">가전 수리</span>
+          <span class="ok-chip">경조사비</span>
+        </div>
+        <p class="list-sublabel" style="margin-top:12px;">사용 불가</p>
+        <div class="no-list">
+          <span class="no-chip">쇼핑</span>
+          <span class="no-chip">여행</span>
+          <span class="no-chip">충동구매</span>
+          <span class="no-chip">취미생활</span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button class="acc-toggle" aria-expanded="false" onclick="toggle(this)">
+          <span class="acc-toggle-label">목표 금액</span>
+          <span class="acc-toggle-icon">+</span>
+        </button>
+        <div class="acc-content">
+          <div class="goal-row">
+            <div class="goal-box">
+              <div class="goal-box-label">최소</div>
+              <div class="goal-box-value">생활비<br>3개월분</div>
+            </div>
+            <div class="goal-box">
+              <div class="goal-box-label">권장</div>
+              <div class="goal-box-value">생활비<br>6개월분</div>
+            </div>
+          </div>
+          <p class="step-note" style="margin-top:10px;">목표 달성 후에는 유지만 한다.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Principle -->
+<div class="principle">
+  <p class="principle-label">가장 중요한 기준</p>
+  <p class="principle-line">혜택을 따라다니는 소비에서,<br><strong>기준을 가진 소비</strong>로 이동한다.</p>
+  <p class="principle-line">저축은 남은 돈으로 하는 것이 아니라,<br><strong>먼저 확보한 뒤 남은 돈으로 생활한다.</strong></p>
+</div>
+
+<script>
+  function toggle(btn) {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    const content = btn.nextElementSibling;
+    content.classList.toggle('open', !expanded);
+  }
+</script>
+</body>
+</html>
