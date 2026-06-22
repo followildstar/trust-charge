@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pepe Archive — 나는 어떤 그림을 그리는 사람인가</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { background: #F5F0E8; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; color: #1C1915; max-width: 480px; margin: 0 auto; background: #F5F0E8; min-height: 100vh; }
+
+  .hero { background: #1C1915; color: #F5F0E8; padding: 2.5rem 1.5rem 2rem; }
+  .hero-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B5B3E; margin-bottom: 0.75rem; }
+  .hero-title { font-size: 13px; color: #C9A96E; font-weight: 500; margin-bottom: 0.5rem; }
+  .hero-statement { font-size: 26px; font-weight: 500; line-height: 1.4; color: #F5F0E8; }
+  .hero-sub { font-size: 13px; color: #8B7355; margin-top: 1rem; line-height: 1.6; }
+
+  .section { padding: 1.5rem; border-bottom: 0.5px solid #E0D8CC; background: #F5F0E8; }
+  .section-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #A89880; margin-bottom: 1rem; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag { font-size: 12px; padding: 5px 11px; border-radius: 20px; border: 0.5px solid #C8BFB0; color: #6B5B3E; background: #FFFFFF; }
+  .tag.warm { border-color: #8B7355; color: #6B4B2A; background: #FDF8F2; }
+
+  .project-hero { background: #1C1915; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 1.5rem 0; }
+  .project-name { font-size: 20px; font-weight: 500; color: #C9A96E; letter-spacing: 0.04em; }
+  .project-sub { font-size: 12px; color: #8B7355; margin-top: 5px; line-height: 1.6; }
+  .progress-row { display: flex; align-items: center; gap: 10px; margin-top: 1.25rem; }
+  .progress-bar-bg { flex: 1; height: 3px; background: #3A342A; border-radius: 2px; }
+  .progress-bar-fill { height: 3px; background: #C9A96E; border-radius: 2px; }
+  .progress-label { font-size: 11px; color: #8B7355; white-space: nowrap; }
+  .project-spacer { height: 1.5rem; background: #F5F0E8; }
+
+  .do-list, .dont-list { display: flex; flex-direction: column; gap: 12px; }
+  .do-item { display: flex; gap: 12px; align-items: flex-start; }
+  .do-num { font-size: 11px; color: #C9A96E; font-weight: 600; min-width: 20px; flex-shrink: 0; padding-top: 1px; }
+  .do-text { font-size: 14px; color: #1C1915; line-height: 1.5; font-weight: 500; }
+  .do-sub { font-size: 12px; color: #A89880; margin-top: 2px; }
+  .dont-item { display: flex; gap: 12px; align-items: flex-start; }
+  .dont-mark { font-size: 12px; color: #C8BFB0; min-width: 20px; flex-shrink: 0; padding-top: 1px; }
+  .dont-text { font-size: 14px; color: #A89880; line-height: 1.5; }
+  .cross { text-decoration: line-through; color: #C8BFB0; }
+
+  .beliefs { display: flex; flex-direction: column; gap: 14px; }
+  .belief { display: flex; gap: 12px; align-items: flex-start; }
+  .belief-arrow { font-size: 12px; color: #C9A96E; padding-top: 3px; flex-shrink: 0; }
+  .belief-line { flex: 1; }
+  .belief-before { font-size: 11px; color: #C8BFB0; text-decoration: line-through; margin-bottom: 3px; }
+  .belief-after { font-size: 14px; color: #1C1915; font-weight: 500; line-height: 1.45; }
+
+  .divider-label { text-align: center; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #A89880; padding: 1.5rem 0 0; background: #F5F0E8; }
+
+  .final-wrap { padding: 1.5rem; background: #F5F0E8; }
+  .final { background: #1C1915; border-radius: 12px; padding: 1.75rem 1.5rem; }
+  .final-small { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #6B5B3E; margin-bottom: 0.9rem; }
+  .final-quote { font-size: 15px; color: #D4C4A8; line-height: 1.8; font-weight: 400; }
+  .final-highlight { color: #C9A96E; font-weight: 500; }
+
+  .bottom-space { height: 3rem; background: #F5F0E8; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">나는 어떤 그림을 그리는 사람인가</div>
+  <div class="hero-title">핵심 정체성</div>
+  <div class="hero-statement">한 장의 그림에<br>오래 머무는 사람</div>
+  <div class="hero-sub">화가에 가깝다 &nbsp;·&nbsp; 깊게 바라본다 &nbsp;·&nbsp; 시간을 태운다</div>
+</div>
+
+<div class="section">
+  <div class="section-label">나는 이런 그림을 좋아한다</div>
+  <div class="tags">
+    <span class="tag warm">액자에 걸 수 있는</span>
+    <span class="tag warm">오래 바라볼 수 있는</span>
+    <span class="tag">묘사와 관찰이 담긴</span>
+    <span class="tag">손의 흔적이 느껴지는</span>
+    <span class="tag">시간이 들어간</span>
+    <span class="tag warm">여백이 있는</span>
+    <span class="tag">작은 것을 깊게 바라본</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">반복적으로 좋아했던 소재</div>
+  <div class="tags">
+    <span class="tag">고양이</span>
+    <span class="tag">사람</span>
+    <span class="tag">일상</span>
+    <span class="tag warm">빛</span>
+    <span class="tag">창가</span>
+    <span class="tag">조용한 순간</span>
+    <span class="tag">관계</span>
+    <span class="tag">성장</span>
+    <span class="tag">행복</span>
+  </div>
+</div>
+
+<div class="divider-label">메인 프로젝트</div>
+
+<div class="project-hero">
+  <div class="project-name">Pepe Archive</div>
+  <div class="project-sub">손가락 한두 마디 크기 &nbsp;·&nbsp; 매우 정밀하게 &nbsp;·&nbsp; 계속 축적</div>
+  <div class="progress-row">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="pbar" style="width: 0%"></div>
+    </div>
+    <div class="progress-label" id="plabel">0 / 100</div>
+  </div>
+</div>
+<div class="project-spacer"></div>
+
+<div class="section">
+  <div class="section-label">해야 할 것</div>
+  <div class="do-list">
+    <div class="do-item">
+      <div class="do-num">01</div>
+      <div>
+        <div class="do-text">완성작 중심으로 그리기</div>
+        <div class="do-sub">그림체 찾기보다 작품 완성하기</div>
+      </div>
+    </div>
+    <div class="do-item">
+      <div class="do-num">02</div>
+      <div>
+        <div class="do-text">작은 크기 유지</div>
+        <div class="do-sub">부담 최소화 · 완성률 최대화</div>
+      </div>
+    </div>
+    <div class="do-item">
+      <div class="do-num">03</div>
+      <div>
+        <div class="do-text">대상을 오래 바라보기</div>
+        <div class="do-sub">사진을 베끼는 것이 아니라 관찰하기</div>
+      </div>
+    </div>
+    <div class="do-item">
+      <div class="do-num">04</div>
+      <div>
+        <div class="do-text">아카이브 만들기</div>
+        <div class="do-sub">P-001 · P-002 · P-003 — 날짜와 번호</div>
+      </div>
+    </div>
+    <div class="do-item">
+      <div class="do-num">05</div>
+      <div>
+        <div class="do-text">실물로 보관하기</div>
+        <div class="do-sub">파일이 아니라 손에 쥘 수 있는 것으로</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">하지 말아야 할 것</div>
+  <div class="dont-list">
+    <div class="dont-item">
+      <div class="dont-mark">✕</div>
+      <div class="dont-text"><span class="cross">그림체 찾기 집착</span> — 그림체는 목표가 아니라 결과</div>
+    </div>
+    <div class="dont-item">
+      <div class="dont-mark">✕</div>
+      <div class="dont-text"><span class="cross">크로키 의무화</span> — 내 성향과 안 맞음</div>
+    </div>
+    <div class="dont-item">
+      <div class="dont-mark">✕</div>
+      <div class="dont-text"><span class="cross">SNS용 그림</span> — 좋아요를 위한 그림은 오래 못 감</div>
+    </div>
+    <div class="dont-item">
+      <div class="dont-mark">✕</div>
+      <div class="dont-text"><span class="cross">거대한 목표</span> — 개인전, 유명 작가, 판매. 지금은 아님</div>
+    </div>
+    <div class="dont-item">
+      <div class="dont-mark">✕</div>
+      <div class="dont-text"><span class="cross">다른 작가 따라가기</span> — 그 사람은 그 사람. 나는 나</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">가장 중요한 발견</div>
+  <div class="beliefs">
+    <div class="belief">
+      <div class="belief-arrow">→</div>
+      <div class="belief-line">
+        <div class="belief-before">연습도 즐거워야 한다</div>
+        <div class="belief-after">나는 연습보다 작품을 좋아한다</div>
+      </div>
+    </div>
+    <div class="belief">
+      <div class="belief-arrow">→</div>
+      <div class="belief-line">
+        <div class="belief-before">많이 그려야 한다</div>
+        <div class="belief-after">깊게 그려야 한다</div>
+      </div>
+    </div>
+    <div class="belief">
+      <div class="belief-arrow">→</div>
+      <div class="belief-line">
+        <div class="belief-before">그림체를 찾아야 한다</div>
+        <div class="belief-after">사랑하는 대상을 오래 바라봐야 한다</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="final-wrap">
+  <div class="final">
+    <div class="final-small">한 문장 정리</div>
+    <div class="final-quote">
+      나는 그림을 많이 그리는 사람이 아니라,<br>
+      <span class="final-highlight">시간을 태워서 오래 남을 그림을<br>만들고 싶은 사람이다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-space"></div>
+
+<script>
+  const total = 100;
+  const current = 0;
+  const pct = (current / total) * 100;
+  document.getElementById('pbar').style.width = pct + '%';
+  document.getElementById('plabel').textContent = current + ' / ' + total;
+</script>
+
+</body>
+</html>
