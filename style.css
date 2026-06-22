@@ -10,8 +10,8 @@
   --accent-soft: #eadfc9;
   --success: #45acff;
   --shadow: 0 24px 70px rgba(40, 34, 25, 0.08);
-  --radius-xl: 25px;
-  --radius-lg: 20px;
+  --radius-xl: 15px;
+  --radius-lg: 10px;
 }
 
 * {
@@ -490,7 +490,7 @@ button.task.bonus-task .task-text {
 
 .day {
   aspect-ratio: 1;
-  border-radius: 15px;
+  border-radius: 8px;
   display: grid;
   place-items: center;
   font-size: 13px;
