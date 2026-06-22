@@ -697,8 +697,7 @@ section.export-link {
     margin: 0;
 }
 .day.has-special-bonus {
-  background: linear-gradient(135deg, #f2aac8, #a8d8ef, #c9b7ff, #f2d29b);
-  color: #fff;
+  background:linear-gradient(135deg, #ffd6e7, #f5f2b0);
   font-weight: 700;
-  box-shadow: 0 8px 20px rgba(201, 183, 255, 0.35);
+  box-shadow: 0 1px 11px rgba(201, 183, 255, 0.35);
 }
