@@ -62,7 +62,7 @@
         <div class="task-list" id="todayTaskList"></div>
       </section>
 
-     <section class="export-link" style="display:flex; gap: 5px;" >
+     <section class="export-link" >
         <div class="export-link-btn">
           <a href="https://followildstar.github.io/opicscript/" target="_blank"><p>OPIC 암기</p></a>
           <a href="https://followildstar.github.io/follow/" target="_blank"><p>드로잉</p></a>
@@ -696,6 +696,15 @@
         if (key === state.selectedDate) dayButton.classList.add('is-selected');
         if (active && doneCount > 0 && doneCount < taskCount) dayButton.classList.add('has-partial');
         if (active && doneCount === taskCount) dayButton.classList.add('has-complete');
+        const bonusRecord = state.records[`${key}_bonus`];
+
+          if (
+            active &&
+            Array.isArray(bonusRecord) &&
+            bonusRecord[0] === true
+          ) {
+            dayButton.classList.add('has-special-bonus');
+          }
 
         dayButton.textContent = d;
         dayButton.disabled = !active;
