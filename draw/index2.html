@@ -2,230 +2,841 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pepe Archive Manifesto</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Figma 정리 원칙</title>
 <style>
-:root{
-  --bg:#f7f5f0;
-  --card:#ffffff;
-  --text:#222;
-  --sub:#777;
-  --line:#e7e3db;
-  --point:#8A6A4A;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+  :root {
+    --bg: #fff;
+    --ink: #1A1A1A;
+    --ink-light: #6B6B6B;
+    --ink-faint: #B8B4AC;
+    --accent: #1A1A1A;
+    --rule: #E2E0DB;
+    --tag-wip: #E8F0FF;
+    --tag-wip-ink: #2952A3;
+    --tag-final: #E6F5EE;
+    --tag-final-ink: #1A6B3A;
+    --tag-archive: #F2F0EB;
+    --tag-archive-ink: #6B6458;
+  }
 
-body{
-  background:var(--bg);
-  font-family:Pretendard,sans-serif;
-  color:var(--text);
-  line-height:1.7;
-}
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0 0 80px 0;
+  }
 
-.container{
-  max-width:600px;
-  margin:0 auto;
-  padding:24px 16px 100px;
-}
+  /* Header */
+  .header {
+    padding: 52px 24px 32px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .header-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .header-sub {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--ink-light);
+  }
 
-.hero{
-  margin-bottom:32px;
-}
+  /* Nav Tabs */
+  .nav {
+    display: flex;
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 14px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-faint);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: all 0.15s;
+  }
+  .nav-btn.active {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
 
-.hero h1{
-  font-size:32px;
-  line-height:1.2;
-  margin-bottom:12px;
-}
+  /* Sections */
+  .section { display: none; }
+  .section.active { display: block; }
 
-.hero p{
-  color:var(--sub);
-  font-size:15px;
-}
+  /* Content */
+  .content { padding: 0 24px; }
 
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:24px;
-  margin-bottom:16px;
-}
+  /* Chapter */
+  .chapter {
+    padding: 32px 0 0;
+  }
+  .chapter-num {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .chapter h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .divider {
+    height: 1px;
+    background: var(--rule);
+    margin: 24px 0;
+  }
+  .divider-heavy {
+    height: 1.5px;
+    background: var(--ink);
+    margin: 28px 0;
+  }
 
-.card h2{
-  font-size:18px;
-  margin-bottom:16px;
-}
+  /* Grade Card */
+  .grade-card {
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .grade-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .grade-badge {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .grade-badge.a { color: #1A1A1A; }
+  .grade-badge.b { color: #4A4A4A; }
+  .grade-badge.c { color: var(--ink-light); }
+  .grade-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-light);
+  }
 
-.card ul{
-  list-style:none;
-}
+  .action-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .action-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .action-icon {
+    font-size: 13px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .action-icon.do { color: #1A6B3A; }
+  .action-icon.dont { color: #C0392B; }
 
-.card li{
-  padding:8px 0;
-  border-bottom:1px solid #f3f3f3;
-}
+  .note-box {
+    background: #EEECEA;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-top: 14px;
+    line-height: 1.55;
+  }
+  .note-box strong {
+    color: var(--ink);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
-.card li:last-child{
-  border-bottom:none;
-}
+  /* Tag Pills */
+  .tag {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    letter-spacing: 0.02em;
+  }
+  .tag.wip { background: var(--tag-wip); color: var(--tag-wip-ink); }
+  .tag.final { background: var(--tag-final); color: var(--tag-final-ink); }
+  .tag.archive { background: var(--tag-archive); color: var(--tag-archive-ink); }
 
-.quote{
-  background:#fff8f1;
-  border-left:4px solid var(--point);
-}
+  /* Name Rule */
+  .name-rule {
+    border-left: 3px solid var(--ink);
+    padding: 16px 16px;
+    margin-bottom: 20px;
+    background: #EFEDE9;
+    border-radius: 0 6px 6px 0;
+  }
+  .name-rule-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .name-rule-formula {
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .name-rule-desc {
+    font-size: 13px;
+    color: var(--ink-light);
+  }
 
-.quote p{
-  font-size:20px;
-  line-height:1.5;
-  font-weight:700;
-}
+  .question-test {
+    border: 1px dashed var(--rule);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .question-test p {
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+  .question-test p:last-child { margin-bottom: 0; }
+  .question-test .q {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+  }
 
-.project-box{
-  text-align:center;
-  padding:28px;
-}
+  .code-list {
+    background: #1A1A1A;
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 12px 0;
+  }
+  .code-item {
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 12.5px;
+    color: #D4F1A0;
+  }
 
-.project-box h3{
-  font-size:26px;
-  margin-bottom:8px;
-}
+  /* Schedule */
+  .week-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .day-card {
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 14px 14px;
+  }
+  .day-card.highlight {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: #F7F6F3;
+  }
+  .day-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    opacity: 0.6;
+  }
+  .day-card.highlight .day-name { opacity: 0.55; color: #F7F6F3; }
+  .day-task {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .day-sub {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 3px;
+  }
+  .day-card.highlight .day-sub { color: #AAA99E; }
 
-.project-box p{
-  color:var(--sub);
-}
+  .time-note {
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-top: 4px;
+  }
 
-.number{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:16px;
-}
+  /* Principle block */
+  .principle-block {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .principle-block:last-child { border-bottom: none; }
+  .principle-num {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+  .principle-text {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .principle-desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.55;
+  }
 
-.number span{
-  background:#f3f0eb;
-  padding:8px 12px;
-  border-radius:999px;
-}
+  /* Mantra */
+  .mantra {
+    margin: 28px 0;
+    padding: 24px;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    text-align: center;
+  }
+  .mantra-text {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .mantra-text span {
+    display: block;
+    font-weight: 400;
+    color: var(--ink-light);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
 
-.final{
-  margin-top:32px;
-  padding:40px 24px;
-  text-align:center;
-}
+  /* Page structure */
+  .page-structure {
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .page-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .page-num {
+    color: var(--ink-faint);
+    width: 24px;
+    flex-shrink: 0;
+  }
+  .page-name {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .page-desc {
+    color: var(--ink-light);
+    font-size: 11px;
+    font-family: 'Apple SD Gothic Neo', sans-serif;
+  }
 
-.final h2{
-  font-size:30px;
-  line-height:1.4;
-}
+  /* Checklist */
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--ink-faint);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Stop rule */
+  .stop-rule {
+    background: var(--ink);
+    color: #F7F6F3;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .stop-rule h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.6;
+  }
+  .stop-rule ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .stop-rule li {
+    font-size: 14px;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .stop-rule li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    opacity: 0.4;
+  }
 </style>
 </head>
-
 <body>
 
-<div class="container">
-
-<div class="hero">
-<h1>당신은 어떤 그림을 그리고 싶은 사람인가</h1>
-<p>
-웹툰 작가보다 화가에 가깝다.
-빠르게 그리는 사람보다 오래 바라보는 사람이다.
-</p>
+<div class="header">
+  <div class="header-label">Personal System</div>
+  <h1>Figma<br>정리 원칙</h1>
+  <p class="header-sub">살아있는 시스템을 유지하기 위한 최소한의 규칙</p>
 </div>
 
-<div class="card quote">
-<p>
-나는 그림체를 찾는 사람이 아니라
-사랑하는 대상을 오래 바라보는 사람이다.
-</p>
+<nav class="nav">
+  <button class="nav-btn active" onclick="show('grade')">등급 기준</button>
+  <button class="nav-btn" onclick="show('naming')">파일명 규칙</button>
+  <button class="nav-btn" onclick="show('schedule')">정리 루틴</button>
+  <button class="nav-btn" onclick="show('rules')">철학</button>
+</nav>
+
+<!-- SECTION: 등급 기준 -->
+<div id="grade" class="section active">
+  <div class="content">
+
+    <div class="chapter">
+      <div class="chapter-num">Section 01</div>
+      <h2>파일 등급 분류</h2>
+    </div>
+
+    <!-- A -->
+    <div class="grade-card">
+      <div class="grade-header">
+        <div class="grade-badge a">A</div>
+        <div class="grade-title">최근 파일 — 기준점</div>
+      </div>
+      <ul class="action-list">
+        <li class="action-item">
+          <span class="action-icon do">✓</span>
+          <span>⭐ 표시만 하기 — 이게 앞으로의 기준</span>
+        </li>
+        <li class="action-item">
+          <span class="action-icon dont">✕</span>
+          <span>절대 손대지 않음</span>
+        </li>
+      </ul>
+      <div class="note-box">
+        <strong>해당 파일</strong>
+        라이브러리화된 파일 · 최근 PMS · 최근 탭/Web 구조<br>
+        팀과 공유 중이거나 현재 운영 중인 것
+      </div>
+      <div class="note-box" style="margin-top:8px;">
+        <strong>판단 질문</strong>
+        "앞으로도 이 방식으로 작업하고 싶은가?"<br>
+        YES → 템플릿 기준으로 삼는다
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="grade-card">
+      <div class="grade-header">
+        <div class="grade-badge b">B</div>
+        <div class="grade-title">애매한 파일 — 최소 정리</div>
+      </div>
+      <ul class="action-list">
+        <li class="action-item">
+          <span class="action-icon do">✓</span>
+          <span>파일명 앞에 접두어 붙이기</span>
+        </li>
+        <li class="action-item">
+          <span class="action-icon do">✓</span>
+          <span>페이지명만 정리 (WIP / FINAL / ARCHIVE)</span>
+        </li>
+        <li class="action-item">
+          <span class="action-icon dont">✕</span>
+          <span>레이어 안 건드림</span>
+        </li>
+        <li class="action-item">
+          <span class="action-icon dont">✕</span>
+          <span>내용 수정 없음</span>
+        </li>
+      </ul>
+      <div class="note-box">
+        <strong>판단 질문</strong>
+        "지금 쓰고 있나, 아니면 언젠가 쓸 것 같아서 두고 있나?"<br>
+        후자라면 C로 강등
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="grade-card">
+      <div class="grade-header">
+        <div class="grade-badge c">C</div>
+        <div class="grade-title">옛날 파일 — 보관 중심</div>
+      </div>
+      <ul class="action-list">
+        <li class="action-item">
+          <span class="action-icon do">✓</span>
+          <span>Archive 폴더로 이동</span>
+        </li>
+        <li class="action-item">
+          <span class="action-icon do">✓</span>
+          <span>파일명에 <span class="tag archive">ARCHIVE_</span> 붙이기</span>
+        </li>
+        <li class="action-item">
+          <span class="action-icon dont">✕</span>
+          <span>열어서 고치지 않음 — 절대</span>
+        </li>
+      </ul>
+      <div class="note-box">
+        <strong>핵심 관점</strong>
+        과거 파일은 기록이지, 작품이 아니다.<br>
+        완성도를 높이려는 충동을 무시한다.
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<div class="card">
-<h2>내가 좋아하는 그림</h2>
-<ul>
-<li>액자에 걸 수 있는 그림</li>
-<li>오래 바라볼 수 있는 그림</li>
-<li>묘사와 관찰이 담긴 그림</li>
-<li>손의 흔적이 느껴지는 그림</li>
-<li>시간이 들어간 그림</li>
-<li>여백이 있는 그림</li>
-<li>작은 것을 깊게 바라본 그림</li>
-</ul>
+<!-- SECTION: 파일명 규칙 -->
+<div id="naming" class="section">
+  <div class="content">
+
+    <div class="chapter">
+      <div class="chapter-num">Section 02</div>
+      <h2>파일명 규칙</h2>
+    </div>
+     <div class="mantra">
+      <div class="mantra-text">
+        <span>Core Rule</span>
+        🟢WIP = 나만 보는 것 (#00704a) <br>
+        🔵FINAL = 회사가 보는 것 (#26247b)<br>
+        🟣ARCHIVE = 과거의 것 (#886ce4)
+      </div>
+    </div>
+
+    <!-- Formula -->
+    <div class="name-rule">
+      <div class="name-rule-title">기본 공식</div>
+      <div class="name-rule-formula">PREFIX_ProjectName_Detail</div>
+      <div class="name-rule-desc">날짜는 필요 시 뒤에 _YYYY 형식으로 추가</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- WIP -->
+    <div class="chapter" style="padding-top:0">
+      <div class="chapter-num">접두어 01</div>
+      <h2><span class="tag wip">🟢WIP_</span></h2>
+    </div>
+    <p style="font-size:14px; color:var(--ink-light); margin-bottom:16px;">나만 보는 작업실. 시행착오, 레퍼런스, 여러 버전이 섞여도 OK.</p>
+
+    <div class="question-test">
+      <p class="q">"이 파일 남이 열면 좀 민망한가?"</p>
+      <p class="q">"시행착오가 많이 들어있나?"</p>
+      <p style="margin-top:8px; font-weight:600; font-size:12px; letter-spacing:0.04em;">YES → WIP</p>
+    </div>
+
+    <div class="code-list">
+      <div class="code-item">WIP_MES_Renewal</div>
+      <div class="code-item">WIP_PMS_Login</div>
+      <div class="code-item">WIP_UI_Experiment</div>
+      <div class="code-item">WIP_Barcode_Concept</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- FINAL -->
+    <div class="chapter" style="padding-top:0">
+      <div class="chapter-num">접두어 02</div>
+      <h2><span class="tag final">🔵FINAL_</span></h2>
+    </div>
+    <p style="font-size:14px; color:var(--ink-light); margin-bottom:16px;">팀 공유용, 전달용, 현재 운영 중. 열었을 때 깨끗해야 함.</p>
+
+    <div class="question-test">
+      <p class="q">"팀원이 이거 바로 열 수 있나?"</p>
+      <p class="q">"개발자와 공유하거나 현재 운영에 쓰이나?"</p>
+      <p style="margin-top:8px; font-weight:600; font-size:12px; letter-spacing:0.04em;">YES → FINAL</p>
+    </div>
+
+    <div class="code-list">
+      <div class="code-item">FINAL_MES_Renewal</div>
+      <div class="code-item">FINAL_UI_Library_Web</div>
+      <div class="code-item">FINAL_PMS_Login</div>
+      <div class="code-item">FINAL_Tablet_Guide</div>
+    </div>
+
+    <div class="note-box" style="margin: 12px 0 0;">
+      <strong>FINAL 내부 페이지 구조</strong>
+      <div class="page-structure" style="margin-top:10px;">
+        <div class="page-row">
+          <span class="page-num">00</span>
+          <span class="page-name">Cover</span>
+          <span class="page-desc">프로젝트 개요</span>
+        </div>
+        <div class="page-row">
+          <span class="page-num">01</span>
+          <span class="page-name">Final</span>
+          <span class="page-desc">실제 전달 화면</span>
+        </div>
+        <div class="page-row">
+          <span class="page-num">02</span>
+          <span class="page-name">Component</span>
+          <span class="page-desc">컴포넌트 정리</span>
+        </div>
+        <div class="page-row">
+          <span class="page-num">03</span>
+          <span class="page-name">Guide</span>
+          <span class="page-desc">사용 가이드 (필요 시)</span>
+        </div>
+        <div class="page-row">
+          <span class="page-num">90</span>
+          <span class="page-name">Archive</span>
+          <span class="page-desc">이전 버전 보관</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ARCHIVE -->
+    <div class="chapter" style="padding-top:0">
+      <div class="chapter-num">접두어 03</div>
+      <h2><span class="tag archive">🟣ARCHIVE_</span></h2>
+    </div>
+    <p style="font-size:14px; color:var(--ink-light); margin-bottom:16px;">끝난 프로젝트, 더 이상 쓰지 않는 파일. 연도를 뒤에 붙인다.</p>
+
+    <div class="question-test">
+      <p class="q">"지금 회사에서 안 씀?"</p>
+      <p class="q">"끝난 프로젝트? 구 버전?"</p>
+      <p style="margin-top:8px; font-weight:600; font-size:12px; letter-spacing:0.04em;">YES → ARCHIVE</p>
+    </div>
+
+    <div class="code-list">
+      <div class="code-item">ARCHIVE_MES_2024</div>
+      <div class="code-item">ARCHIVE_GroupSite_2023</div>
+      <div class="code-item">ARCHIVE_UI_Library_v1</div>
+    </div>
+
+    <div class="divider-heavy"></div>
+
+   
+
+  </div>
 </div>
 
-<div class="card">
-<h2>반복적으로 사랑한 소재</h2>
-<ul>
-<li>고양이</li>
-<li>사람</li>
-<li>일상</li>
-<li>빛</li>
-<li>창가</li>
-<li>조용한 순간</li>
-<li>관계</li>
-<li>성장</li>
-<li>행복</li>
-</ul>
+<!-- SECTION: 정리 루틴 -->
+<div id="schedule" class="section">
+  <div class="content">
+
+    <div class="chapter">
+      <div class="chapter-num">Section 03</div>
+      <h2>정리 루틴</h2>
+    </div>
+
+    <!-- Weekly grid -->
+    <p style="font-size:13px; color:var(--ink-light); margin-bottom:16px;">주 5일 · 하루 30–40분 · 딱 그만큼만</p>
+
+    <div class="week-grid">
+      <div class="day-card highlight">
+        <div class="day-name">Mon</div>
+        <div class="day-task">Figma</div>
+        <div class="day-sub">파일 분류</div>
+      </div>
+      <div class="day-card highlight">
+        <div class="day-name">Tue</div>
+        <div class="day-task">Figma</div>
+        <div class="day-sub">파일명 정리</div>
+      </div>
+      <div class="day-card highlight">
+        <div class="day-name">Wed</div>
+        <div class="day-task">Figma</div>
+        <div class="day-sub">페이지 구조</div>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Thu</div>
+        <div class="day-task">Notion</div>
+        <div class="day-sub">문서 정리</div>
+      </div>
+      <div class="day-card" style="grid-column: span 2;">
+        <div class="day-name">Fri</div>
+        <div class="day-task">자료실 / 이미지</div>
+        <div class="day-sub">레퍼런스 · 에셋</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Day 1 Protocol -->
+    <div class="chapter" style="padding-top:0">
+      <div class="chapter-num">첫째 날 프로토콜</div>
+      <h2>30분 — 파일 안 열기</h2>
+    </div>
+
+    <div class="stop-rule">
+      <h3>진행 순서</h3>
+      <ul>
+        <li>Figma 홈에서 딱 15개 파일만 본다</li>
+        <li>A등급 → ⭐ 표시만. 끝.</li>
+        <li>B등급 → 파일명 앞에 접두어 붙이기</li>
+        <li>C등급 → Archive 후보 체크</li>
+        <li>파일 절대 열지 않는다</li>
+      </ul>
+    </div>
+
+    <div class="note-box">
+      <strong>핵심 구분</strong>
+      오늘 하는 건 <strong style="color:var(--ink)">"분류"</strong>이지 정리가 아니다.<br>
+      파일을 열면 고치고 싶어진다. 그게 함정.
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 하루 분량 -->
+    <div class="chapter" style="padding-top:0">
+      <div class="chapter-num">하루 작업량</div>
+      <h2>15개 파일 / 30분 제한</h2>
+    </div>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>타이머 켜기 — 30분</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>홈에서 15개만 골라서 분류</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>접두어 붙이기 (파일명만)</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>타이머 끝나면 멈추기</span>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:16px;">
+      <strong>왜 15개인가</strong>
+      많이 하려다 지치면 안 한다.<br>
+      매주 하는 게 한 번에 몰아하는 것보다 낫다.
+    </div>
+
+  </div>
 </div>
 
-<div class="card project-box">
-<h3>Pepe Archive</h3>
-<p>
-손가락 한두 마디 크기.<br>
-하지만 매우 정밀하게.
-</p>
+<!-- SECTION: 철학 -->
+<div id="rules" class="section">
+  <div class="content">
 
-<div class="number">
-<span>P-001</span>
-<span>P-002</span>
-<span>P-003</span>
-<span>...</span>
-<span>P-500</span>
-</div>
-</div>
+    <div class="chapter">
+      <div class="chapter-num">Section 04</div>
+      <h2>정리 철학</h2>
+    </div>
 
-<div class="card">
-<h2>해야 할 것</h2>
-<ul>
-<li>작품 완성하기</li>
-<li>작게 시작하기</li>
-<li>오래 관찰하기</li>
-<li>번호 부여하기</li>
-<li>실물로 보관하기</li>
-</ul>
-</div>
+    <div class="principle-block">
+      <div class="principle-num">원칙 01</div>
+      <div class="principle-text">살아있는 것만 관리한다</div>
+      <div class="principle-desc">과거 파일을 현재 기준으로 고치려 하지 않는다. 살아있는 파일 중심으로 좋은 시스템을 만드는 것이 목표다.</div>
+    </div>
 
-<div class="card">
-<h2>하지 말아야 할 것</h2>
-<ul>
-<li>그림체 찾기 집착</li>
-<li>크로키 의무화</li>
-<li>SNS용 그림 만들기</li>
-<li>거대한 목표 설정</li>
-<li>다른 작가 따라가기</li>
-</ul>
-</div>
+    <div class="principle-block">
+      <div class="principle-num">원칙 02</div>
+      <div class="principle-text">파일을 열면 고치고 싶어진다</div>
+      <div class="principle-desc">C등급 파일은 절대 열지 않는다. 보관은 보관이다. 분류 세션에서는 홈 화면만 본다.</div>
+    </div>
 
-<div class="card quote">
-<p>
-예전 생각 : 많이 그려야 한다.<br>
-지금 생각 : 깊게 그려야 한다.
-</p>
-</div>
+    <div class="principle-block">
+      <div class="principle-num">원칙 03</div>
+      <div class="principle-text">완벽한 정리보다 지속 가능한 루틴</div>
+      <div class="principle-desc">30분 안에 끝낸다. 타이머가 울리면 멈춘다. 다음 주에 이어서 한다.</div>
+    </div>
 
-<div class="final">
-<h2>
-나는 그림을 많이 그리는 사람이 아니라,<br>
-시간을 태워 오래 남을 그림을 만들고 싶은 사람이다.
-</h2>
-</div>
+    <div class="principle-block">
+      <div class="principle-num">원칙 04</div>
+      <div class="principle-text">A등급이 기준이다</div>
+      <div class="principle-desc">최근의 잘 정리된 파일이 앞으로의 기준점. 새 파일은 처음부터 이 기준으로 만든다. 과거 파일을 이 기준으로 올리려 하지 않는다.</div>
+    </div>
 
+    <div class="principle-block">
+      <div class="principle-num">원칙 05</div>
+      <div class="principle-text">언제 멈출지 미리 정해둔다</div>
+      <div class="principle-desc">정리가 너무 잘 되면 계속 하고 싶어진다. 시간 제한이 곧 완료 기준이다. "다 못 했다"가 아니라 "오늘 몫을 했다".</div>
+    </div>
+
+    <div class="divider-heavy"></div>
+
+    <div class="mantra">
+      <div class="mantra-text">
+        <span>This system is for</span>
+        예전 것도 기준 맞춰야지 ✕<br><br>
+        최근 기준으로<br>살아있는 시스템 만들기 ○
+      </div>
+    </div>
+
+  </div>
 </div>
 
+<script>
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 </body>
 </html>
